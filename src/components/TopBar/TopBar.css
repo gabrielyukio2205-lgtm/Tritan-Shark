@@ -1,0 +1,88 @@
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 var(--space-4);
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: var(--glass-blur);
+    z-index: 100;
+}
+
+.topbar-left,
+.topbar-center,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.logo-icon {
+    font-size: 24px;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.topbar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border-color);
+    margin: 0 var(--space-2);
+}
+
+.workflow-name-input {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: var(--space-2) var(--space-3);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    min-width: 200px;
+    transition: all var(--transition-fast);
+}
+
+.workflow-name-input:hover {
+    background: var(--glass-bg);
+    border-color: var(--border-color);
+}
+
+.workflow-name-input:focus {
+    outline: none;
+    background: var(--bg-secondary);
+    border-color: var(--accent-primary);
+}
+
+.guardian-toggle.active {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.run-btn {
+    min-width: 100px;
+}
+
+@media (max-width: 768px) {
+    .topbar-center {
+        display: none;
+    }
+
+    .workflow-name-input {
+        min-width: 120px;
+    }
+}
