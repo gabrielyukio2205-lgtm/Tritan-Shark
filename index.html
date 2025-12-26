@@ -13,6 +13,12 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
   <style>
     *,
     *::before,
@@ -23,29 +29,56 @@
     }
 
     :root {
-      --bg-primary: #0a0a0f;
-      --bg-secondary: #12121a;
-      --bg-tertiary: #1a1a25;
-      --accent-primary: #6366f1;
-      --accent-secondary: #22d3ee;
-      --accent-success: #22c55e;
-      --accent-warning: #f59e0b;
-      --accent-error: #ef4444;
-      --text-primary: #ffffff;
-      --text-secondary: #a1a1aa;
-      --text-muted: #71717a;
-      --border-color: rgba(255, 255, 255, 0.1);
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --glass-blur: blur(12px);
-      --node-trigger: #22c55e;
+      /* Premium Dark Theme */
+      --bg-base: #09090b;
+      --bg-elevated: #18181b;
+      --bg-muted: #27272a;
+      --bg-subtle: #3f3f46;
+
+      /* Accent Colors */
+      --accent: #a855f7;
+      --accent-hover: #c084fc;
+      --accent-muted: rgba(168, 85, 247, 0.15);
+      --cyan: #06b6d4;
+      --cyan-muted: rgba(6, 182, 212, 0.15);
+
+      /* Status Colors */
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info: #3b82f6;
+
+      /* Node Colors */
+      --node-trigger: #10b981;
       --node-action: #6366f1;
       --node-condition: #f59e0b;
+      --node-loop: #8b5cf6;
       --node-llm: #ec4899;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-    }
+      --node-http: #3b82f6;
+      --node-code: #14b8a6;
+      --node-transform: #f97316;
 
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      /* Text */
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-subtle: #71717a;
+
+      /* Borders */
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.15);
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.2);
+
+      /* Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+    }
 
     html,
     body,
@@ -57,32 +90,30 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at bottom right, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
-        #0a0a0f;
-      color: var(--text-primary);
+      background: var(--bg-base);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
     }
 
     .app {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: auto 1fr;
       height: 100vh;
     }
 
-    /* TopBar */
+    /* ========== TOP BAR ========== */
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 60px;
-      padding: 0 20px;
-      background: var(--glass-bg);
-      border-bottom: 1px solid var(--border-color);
-      backdrop-filter: var(--glass-blur);
+      height: 56px;
+      padding: 0 16px;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
     }
 
-    .topbar-left,
-    .topbar-actions {
+    .topbar-section {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -91,234 +122,476 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      padding-right: 16px;
+      border-right: 1px solid var(--border);
     }
 
     .logo-icon {
-      font-size: 28px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      border-radius: var(--radius-md);
+      font-size: 18px;
     }
 
     .logo-text {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: -0.5px;
     }
 
-    .workflow-name {
-      background: transparent;
-      border: 1px solid transparent;
-      padding: 8px 12px;
-      font-size: 14px;
-      color: var(--text-primary);
+    .workflow-input {
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
       border-radius: var(--radius-md);
-      width: 200px;
+      width: 180px;
+      transition: all 0.2s;
     }
 
-    .workflow-name:hover {
-      background: var(--glass-bg);
-      border-color: var(--border-color);
+    .workflow-input:hover {
+      border-color: var(--border-hover);
     }
 
-    .workflow-name:focus {
+    .workflow-input:focus {
       outline: none;
-      background: var(--bg-secondary);
-      border-color: var(--accent-primary);
+      border-color: var(--accent);
+      background: var(--bg-elevated);
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      padding: 8px 16px;
+      height: 34px;
+      padding: 0 14px;
       font-size: 13px;
       font-weight: 500;
+      font-family: inherit;
       border-radius: var(--radius-md);
       cursor: pointer;
-      transition: all 0.15s ease;
-      border: 1px solid var(--border-color);
-      background: var(--glass-bg);
-      color: var(--text-primary);
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+      background: var(--bg-muted);
+      color: var(--text);
     }
 
     .btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
+      background: var(--bg-subtle);
+      border-color: var(--border-hover);
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent-primary), #4f46e5);
-      border: none;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    .btn-icon {
+      width: 34px;
+      padding: 0;
     }
 
-    .btn-primary:hover {
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    .btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      font-weight: 600;
     }
 
-    .btn-guardian {
-      background: rgba(239, 68, 68, 0.2);
-      border-color: var(--accent-error);
+    .btn-accent:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
     }
 
-    /* Main Content */
-    .main-content {
-      display: flex;
-      flex: 1;
+    .btn-ghost {
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-muted);
+    }
+
+    .divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+    }
+
+    /* ========== MAIN LAYOUT ========== */
+    .main {
+      display: grid;
+      grid-template-columns: 220px 1fr 300px;
       overflow: hidden;
     }
 
-    /* Sidebar */
+    /* ========== SIDEBAR ========== */
     .sidebar {
-      width: 220px;
-      background: var(--glass-bg);
-      border-right: 1px solid var(--border-color);
-      backdrop-filter: var(--glass-blur);
+      background: var(--bg-elevated);
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .sidebar-header {
       padding: 16px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-bottom: 1px solid var(--border);
     }
 
-    .sidebar-header h3 {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .sidebar-hint {
+    .sidebar-title {
       font-size: 11px;
-      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-subtle);
     }
 
     .node-list {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      overflow-y: auto;
       flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .node-category {
+      margin-bottom: 8px;
+    }
+
+    .node-category-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-subtle);
+      padding: 8px;
     }
 
     .node-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
+      gap: 10px;
+      padding: 10px 12px;
       border-radius: var(--radius-md);
       cursor: grab;
-      transition: all 0.15s ease;
-      border-left: 3px solid var(--node-color);
+      transition: all 0.15s;
+      margin-bottom: 2px;
     }
 
     .node-item:hover {
-      background: var(--bg-tertiary);
-      transform: translateX(4px);
+      background: var(--bg-muted);
+    }
+
+    .node-item:active {
+      cursor: grabbing;
     }
 
     .node-icon {
-      font-size: 18px;
       width: 28px;
       height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      background: var(--node-color);
+      opacity: 0.9;
     }
 
-    .node-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+    .node-meta {
+      flex: 1;
+      min-width: 0;
     }
 
-    .node-label {
+    .node-name {
       font-size: 13px;
       font-weight: 500;
     }
 
     .node-desc {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .sidebar-tip {
-      padding: 12px;
       font-size: 11px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-color);
+      color: var(--text-subtle);
+      margin-top: 1px;
     }
 
-    /* Canvas */
+    /* ========== CANVAS ========== */
     .canvas {
-      flex: 1;
       position: relative;
       overflow: hidden;
+      background: var(--bg-base);
+    }
+
+    .canvas.panning {
+      cursor: grabbing;
     }
 
     .canvas-viewport {
       position: absolute;
       inset: 0;
       transform-origin: 0 0;
-      transition: transform 0.1s ease-out;
     }
 
     .canvas-grid {
       position: absolute;
-      width: 5000px;
-      height: 5000px;
-      left: -2500px;
-      top: -2500px;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-      background-size: 20px 20px;
+      width: 10000px;
+      height: 10000px;
+      left: -5000px;
+      top: -5000px;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.4;
     }
 
-    /* Zoom Controls */
-    .zoom-controls {
+    .canvas-origin {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      z-index: 100;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      left: -4px;
+      top: -4px;
+      box-shadow: 0 0 12px var(--accent);
     }
 
-    .zoom-btn {
-      width: 36px;
-      height: 36px;
+    /* Connections */
+    .connections-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .connection {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+    }
+
+    .connection:hover {
+      opacity: 1;
+      stroke-width: 3;
+    }
+
+    .connection-temp {
+      stroke: var(--cyan);
+      stroke-dasharray: 6 4;
+      opacity: 0.8;
+    }
+
+    /* Nodes Layer */
+    .nodes-layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .workflow-node {
+      position: absolute;
+      min-width: 200px;
+      max-width: 280px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      cursor: move;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+
+    .workflow-node::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--node-color);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .workflow-node:hover {
+      border-color: var(--border-hover);
+    }
+
+    .workflow-node.selected {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-lg), 0 0 0 2px var(--accent-muted);
+    }
+
+    .workflow-node.dragging {
+      opacity: 0.85;
+      z-index: 1000;
+    }
+
+    .node-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .node-header-icon {
+      width: 24px;
+      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
+      background: var(--node-color);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+    }
+
+    .node-header-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .node-content {
+      padding: 12px 14px;
+    }
+
+    .node-field {
+      margin-bottom: 10px;
+    }
+
+    .node-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .node-field-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-subtle);
+      margin-bottom: 6px;
+    }
+
+    .node-field-input,
+    .node-field-select,
+    .node-field-textarea {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+    }
+
+    .node-field-input:focus,
+    .node-field-select:focus,
+    .node-field-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--bg-base);
+    }
+
+    .node-field-textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .node-field-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    /* Node Handles */
+    .node-handle {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--bg-subtle);
+      border: 2px solid var(--text-subtle);
+      border-radius: 50%;
+      cursor: crosshair;
+      transition: all 0.15s;
+      z-index: 10;
+    }
+
+    .node-handle:hover {
+      transform: scale(1.4);
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .node-handle-in {
+      left: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-color: var(--cyan);
+    }
+
+    .node-handle-in:hover {
+      transform: translateY(-50%) scale(1.4);
+      background: var(--cyan);
+    }
+
+    .node-handle-out {
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-color: var(--accent);
+    }
+
+    .node-handle-out:hover {
+      transform: translateY(-50%) scale(1.4);
+      background: var(--accent);
+    }
+
+    /* Canvas Controls */
+    .canvas-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      display: flex;
+      gap: 4px;
+      background: var(--bg-elevated);
+      padding: 6px;
       border-radius: var(--radius-md);
-      color: var(--text-primary);
-      font-size: 18px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .zoom-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 16px;
       cursor: pointer;
       transition: all 0.15s;
     }
 
     .zoom-btn:hover {
-      background: var(--bg-tertiary);
-      border-color: var(--accent-primary);
+      background: var(--bg-muted);
+      color: var(--text);
     }
 
-    .zoom-level {
-      text-align: center;
+    .zoom-display {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
       font-size: 11px;
+      font-weight: 600;
       color: var(--text-muted);
-      padding: 4px;
+      min-width: 48px;
+      justify-content: center;
     }
 
     .canvas-empty {
@@ -331,285 +604,175 @@
     }
 
     .canvas-empty-icon {
-      font-size: 80px;
-      opacity: 0.2;
+      font-size: 56px;
       margin-bottom: 16px;
+      opacity: 0.3;
     }
 
-    .canvas-empty h3 {
-      font-size: 24px;
+    .canvas-empty-title {
+      font-size: 20px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       margin-bottom: 8px;
     }
 
-    .canvas-empty p {
+    .canvas-empty-desc {
       font-size: 14px;
-      color: var(--text-muted);
+      color: var(--text-subtle);
     }
 
-    /* Connections SVG */
-    .connections-svg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: visible;
-    }
-
-    .connection-line {
-      fill: none;
-      stroke: var(--accent-primary);
-      stroke-width: 2;
-      stroke-dasharray: 8 4;
-      animation: dash 0.5s linear infinite;
-    }
-
-    .connection-line-temp {
-      stroke: var(--accent-secondary);
-      stroke-dasharray: 4 4;
-      opacity: 0.7;
-    }
-
-    @keyframes dash {
-      to {
-        stroke-dashoffset: -12;
-      }
-    }
-
-    /* Nodes */
-    .dropped-nodes {
-      position: absolute;
-      inset: 0;
-    }
-
-    .dropped-node {
-      position: absolute;
-      min-width: 180px;
-      background: var(--bg-secondary);
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      cursor: move;
-      border-top: 3px solid var(--node-color);
-      user-select: none;
-      transition: box-shadow 0.15s, border-color 0.15s;
-    }
-
-    .dropped-node:hover {
-      border-color: var(--accent-primary);
-    }
-
-    .dropped-node.selected {
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
-    }
-
-    .dropped-node.dragging {
-      opacity: 0.9;
-      cursor: grabbing;
-      z-index: 1000;
-    }
-
-    .dropped-node-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.02);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .dropped-node-body {
-      padding: 12px;
-    }
-
-    .dropped-node-field {
-      margin-bottom: 8px;
-    }
-
-    .dropped-node-field label {
-      display: block;
-      font-size: 10px;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .dropped-node-field select,
-    .dropped-node-field input,
-    .dropped-node-field textarea {
-      width: 100%;
-      padding: 6px 8px;
-      font-size: 12px;
-      color: var(--text-primary);
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-    }
-
-    .dropped-node-field select:focus,
-    .dropped-node-field input:focus,
-    .dropped-node-field textarea:focus {
-      outline: none;
-      border-color: var(--accent-primary);
-    }
-
-    /* Connection Handles */
-    .node-handle {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: var(--accent-primary);
-      border: 2px solid var(--bg-primary);
-      border-radius: 50%;
-      cursor: crosshair;
-      transition: transform 0.15s, box-shadow 0.15s;
-      z-index: 10;
-    }
-
-    .node-handle:hover {
-      transform: scale(1.3);
-      box-shadow: 0 0 10px var(--accent-primary);
-    }
-
-    .node-handle-input {
-      left: -7px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--accent-secondary);
-    }
-
-    .node-handle-input:hover {
-      transform: translateY(-50%) scale(1.3);
-    }
-
-    .node-handle-output {
-      right: -7px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .node-handle-output:hover {
-      transform: translateY(-50%) scale(1.3);
-    }
-
-    /* Guardian */
+    /* ========== GUARDIAN PANEL ========== */
     .guardian {
-      width: 280px;
-      background: var(--glass-bg);
-      border-left: 1px solid var(--border-color);
-      backdrop-filter: var(--glass-blur);
+      background: var(--bg-elevated);
+      border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .guardian-header {
-      padding: 16px;
-      border-bottom: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
     }
 
     .guardian-title {
       display: flex;
       align-items: center;
       gap: 8px;
+      font-size: 13px;
       font-weight: 600;
     }
 
-    .guardian-content {
-      padding: 12px;
+    .guardian-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .status-dot.error {
+      background: var(--error);
+    }
+
+    .guardian-body {
       flex: 1;
       overflow-y: auto;
+      padding: 16px;
     }
 
     .guardian-section {
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
-    .guardian-section h4 {
-      font-size: 11px;
+    .guardian-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .guardian-section-title {
+      font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      color: var(--text-subtle);
+      margin-bottom: 10px;
     }
 
-    .guardian-alert {
+    .alert {
       display: flex;
-      gap: 8px;
-      padding: 10px;
-      background: var(--bg-secondary);
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-muted);
       border-radius: var(--radius-md);
       margin-bottom: 8px;
-      border-left: 3px solid var(--accent-warning);
+      border-left: 3px solid var(--warning);
     }
 
-    .guardian-alert.error {
-      border-left-color: var(--accent-error);
-      background: rgba(239, 68, 68, 0.1);
+    .alert.error {
+      border-color: var(--error);
+      background: rgba(239, 68, 68, 0.08);
     }
 
-    .guardian-alert.success {
-      border-left-color: var(--accent-success);
-      background: rgba(34, 197, 94, 0.1);
+    .alert.success {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.08);
     }
 
     .alert-icon {
       font-size: 14px;
+      flex-shrink: 0;
     }
 
-    .alert-message {
+    .alert-text {
       font-size: 12px;
-      color: var(--text-primary);
-      line-height: 1.4;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
     .guardian-empty {
-      text-align: center;
-      padding: 32px;
-      color: var(--text-muted);
-    }
-
-    .guardian-empty span {
-      font-size: 40px;
-      display: block;
-      margin-bottom: 8px;
-      opacity: 0.4;
-    }
-
-    .guardian-stats {
-      display: flex;
-      gap: 8px;
-    }
-
-    .stat {
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 12px;
-      background: var(--bg-secondary);
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .guardian-empty-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    .guardian-empty-text {
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .stat-card {
+      background: var(--bg-muted);
       border-radius: var(--radius-md);
+      padding: 14px;
+      text-align: center;
     }
 
     .stat-value {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 700;
-      color: var(--accent-primary);
+      color: var(--accent);
+      line-height: 1;
     }
 
     .stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-subtle);
+      margin-top: 6px;
     }
 
+    /* ========== ANIMATIONS ========== */
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.96);
       }
 
       to {
@@ -619,7 +782,25 @@
     }
 
     .animate-in {
-      animation: fadeIn 0.2s ease;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    /* ========== SCROLLBAR ========== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg-subtle);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-subtle);
     }
   </style>
 </head>
@@ -631,14 +812,14 @@
     const { useState, useRef, useCallback, useEffect } = React;
 
     const NODE_TYPES = {
-      trigger: { label: 'Trigger', color: '#22c55e', icon: '⚡', desc: 'Start workflow' },
-      action: { label: 'Action', color: '#6366f1', icon: '▶️', desc: 'Perform action' },
-      condition: { label: 'Condition', color: '#f59e0b', icon: '🔀', desc: 'Branch logic' },
-      loop: { label: 'Loop', color: '#8b5cf6', icon: '🔄', desc: 'Iterate items' },
-      llm: { label: 'LLM', color: '#ec4899', icon: '🤖', desc: 'AI processing' },
-      http: { label: 'HTTP', color: '#3b82f6', icon: '🌐', desc: 'API requests' },
-      code: { label: 'Code', color: '#14b8a6', icon: '💻', desc: 'Custom code' },
-      transform: { label: 'Transform', color: '#f97316', icon: '🔧', desc: 'Transform data' }
+      trigger: { label: 'Trigger', color: 'var(--node-trigger)', icon: '⚡', desc: 'Start point', category: 'flow' },
+      action: { label: 'Action', color: 'var(--node-action)', icon: '▶', desc: 'Execute task', category: 'flow' },
+      condition: { label: 'Condition', color: 'var(--node-condition)', icon: '◇', desc: 'Branch logic', category: 'flow' },
+      loop: { label: 'Loop', color: 'var(--node-loop)', icon: '↻', desc: 'Iterate items', category: 'flow' },
+      llm: { label: 'LLM', color: 'var(--node-llm)', icon: '✦', desc: 'AI inference', category: 'ai' },
+      http: { label: 'HTTP', color: 'var(--node-http)', icon: '⇄', desc: 'API call', category: 'data' },
+      code: { label: 'Code', color: 'var(--node-code)', icon: '{ }', desc: 'Custom script', category: 'data' },
+      transform: { label: 'Transform', color: 'var(--node-transform)', icon: '⟷', desc: 'Map data', category: 'data' }
     };
 
     const LLM_PROVIDERS = {
@@ -648,333 +829,292 @@
       gemini: ['gemini-2.0-flash-exp', 'gemini-1.5-pro']
     };
 
-    function TopBar({ workflowName, setWorkflowName, onClear, onRun, onExport, onImport, guardianOpen, setGuardianOpen }) {
+    const CATEGORIES = { flow: 'Control Flow', ai: 'AI & ML', data: 'Data' };
+
+    // ========== TOPBAR ==========
+    function TopBar({ name, setName, onClear, onRun, onExport, onImport }) {
       return (
         <header className="topbar">
-          <div className="topbar-left">
+          <div className="topbar-section">
             <div className="logo">
-              <span className="logo-icon">🔱</span>
+              <div className="logo-icon">🔱</div>
               <span className="logo-text">Tritan</span>
             </div>
-            <input
-              type="text" className="workflow-name" value={workflowName}
-              onChange={(e) => setWorkflowName(e.target.value)} placeholder="Workflow name..."
-            />
+            <input className="workflow-input" value={name} onChange={e => setName(e.target.value)} placeholder="Untitled workflow" />
           </div>
-          <div className="topbar-actions">
-            <button className="btn" onClick={onImport}>📂 Import</button>
-            <button className="btn" onClick={onExport}>💾 Export</button>
-            <button className="btn" onClick={() => { localStorage.setItem('tritan-workflow', JSON.stringify({ workflowName })); alert('Saved!'); }}>✅ Save</button>
-            <button className="btn" onClick={onClear}>🗑️ Clear</button>
-            <button className={`btn ${guardianOpen ? 'btn-guardian' : ''}`} onClick={() => setGuardianOpen(!guardianOpen)}>
-              🛡️ Guardian
-            </button>
-            <button className="btn btn-primary" onClick={onRun}>▶️ Run</button>
+          <div className="topbar-section">
+            <button className="btn btn-ghost btn-icon" onClick={onImport} title="Import">📂</button>
+            <button className="btn btn-ghost btn-icon" onClick={onExport} title="Export">💾</button>
+            <button className="btn btn-ghost btn-icon" onClick={onClear} title="Clear">🗑</button>
+            <div className="divider" />
+            <button className="btn btn-accent" onClick={onRun}>▶ Run</button>
           </div>
         </header>
       );
     }
 
+    // ========== SIDEBAR ==========
     function Sidebar({ onDragStart }) {
+      const grouped = Object.entries(NODE_TYPES).reduce((acc, [id, node]) => {
+        if (!acc[node.category]) acc[node.category] = [];
+        acc[node.category].push({ id, ...node });
+        return acc;
+      }, {});
+
       return (
         <aside className="sidebar">
           <div className="sidebar-header">
-            <h3>📦 Nodes</h3>
-            <span className="sidebar-hint">Drag to canvas</span>
+            <span className="sidebar-title">Nodes</span>
           </div>
           <div className="node-list">
-            {Object.entries(NODE_TYPES).map(([type, config]) => (
-              <div key={type} className="node-item" style={{ '--node-color': config.color }}
-                draggable onDragStart={(e) => onDragStart(e, type)}>
-                <div className="node-icon">{config.icon}</div>
-                <div className="node-info">
-                  <span className="node-label">{config.label}</span>
-                  <span className="node-desc">{config.desc}</span>
-                </div>
+            {Object.entries(grouped).map(([cat, nodes]) => (
+              <div key={cat} className="node-category">
+                <div className="node-category-title">{CATEGORIES[cat]}</div>
+                {nodes.map(node => (
+                  <div key={node.id} className="node-item" style={{ '--node-color': node.color }}
+                    draggable onDragStart={e => onDragStart(e, node.id)}>
+                    <div className="node-icon">{node.icon}</div>
+                    <div className="node-meta">
+                      <div className="node-name">{node.label}</div>
+                      <div className="node-desc">{node.desc}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ))}
-          </div>
-          <div className="sidebar-tip">
-            💡 <b>Tip:</b> Connect nodes by dragging from output (right) to input (left) handles
           </div>
         </aside>
       );
     }
 
+    // ========== CANVAS ==========
     function Canvas({ nodes, setNodes, connections, setConnections, selectedNode, setSelectedNode }) {
       const canvasRef = useRef(null);
-      const [draggingNode, setDraggingNode] = useState(null);
-      const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-      const [connectingFrom, setConnectingFrom] = useState(null);
-      const [tempLine, setTempLine] = useState(null);
       const nodeRefs = useRef({});
 
-      // Zoom and Pan state
       const [zoom, setZoom] = useState(1);
-      const [pan, setPan] = useState({ x: 0, y: 0 });
+      const [pan, setPan] = useState({ x: 400, y: 200 });
       const [isPanning, setIsPanning] = useState(false);
       const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
-      const handleWheel = useCallback((e) => {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -0.1 : 0.1;
-        setZoom(z => Math.min(2, Math.max(0.25, z + delta)));
+      const [draggingNode, setDraggingNode] = useState(null);
+      const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+
+      const [connectingFrom, setConnectingFrom] = useState(null);
+      const [tempLine, setTempLine] = useState(null);
+
+      // Zoom with wheel
+      useEffect(() => {
+        const el = canvasRef.current;
+        const handleWheel = e => {
+          e.preventDefault();
+          const delta = e.deltaY > 0 ? -0.08 : 0.08;
+          setZoom(z => Math.min(2, Math.max(0.25, z + delta)));
+        };
+        el?.addEventListener('wheel', handleWheel, { passive: false });
+        return () => el?.removeEventListener('wheel', handleWheel);
       }, []);
 
-      const zoomIn = () => setZoom(z => Math.min(2, z + 0.25));
-      const zoomOut = () => setZoom(z => Math.max(0.25, z - 0.25));
-      const resetZoom = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
-
-      useEffect(() => {
-        const canvas = canvasRef.current;
-        if (canvas) {
-          canvas.addEventListener('wheel', handleWheel, { passive: false });
-          return () => canvas.removeEventListener('wheel', handleWheel);
-        }
-      }, [handleWheel]);
-
-      const getNodeCenter = (nodeId, handleType) => {
-        const node = nodes.find(n => n.id === nodeId);
-        if (!node) return { x: 0, y: 0 };
-        const el = nodeRefs.current[nodeId];
-        const width = el ? el.offsetWidth : 180;
-        const height = el ? el.offsetHeight : 80;
+      const screenToCanvas = (clientX, clientY) => {
+        const rect = canvasRef.current.getBoundingClientRect();
         return {
-          x: node.x + (handleType === 'output' ? width : 0),
-          y: node.y + height / 2
+          x: (clientX - rect.left - pan.x) / zoom,
+          y: (clientY - rect.top - pan.y) / zoom
         };
       };
 
-      const handleDrop = useCallback((e) => {
+      const getNodeCenter = (nodeId, handle) => {
+        const node = nodes.find(n => n.id === nodeId);
+        if (!node) return { x: 0, y: 0 };
+        const el = nodeRefs.current[nodeId];
+        const w = el?.offsetWidth || 200;
+        const h = el?.offsetHeight || 80;
+        return { x: node.x + (handle === 'out' ? w : 0), y: node.y + h / 2 };
+      };
+
+      const handleDrop = e => {
         e.preventDefault();
         const type = e.dataTransfer.getData('nodeType');
         if (!type) return;
-        const rect = canvasRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left - pan.x) / zoom - 90;
-        const y = (e.clientY - rect.top - pan.y) / zoom - 40;
-        const newNode = {
+        const pos = screenToCanvas(e.clientX, e.clientY);
+        setNodes(prev => [...prev, {
           id: `node-${Date.now()}`,
           type,
-          x: Math.max(0, x),
-          y: Math.max(0, y),
+          x: pos.x - 100,
+          y: pos.y - 40,
           data: {
             label: NODE_TYPES[type].label,
             provider: type === 'llm' ? 'groq' : null,
             model: type === 'llm' ? 'llama-3.3-70b-versatile' : null,
             prompt: '', config: {}
           }
-        };
-        setNodes(prev => [...prev, newNode]);
-      }, [setNodes, zoom, pan]);
-
-      const handleNodeMouseDown = (e, node) => {
-        if (e.target.closest('.node-handle') || e.target.tagName === 'SELECT' ||
-          e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        e.preventDefault();
-        setSelectedNode(node.id);
-        setDraggingNode(node.id);
-        // Calculate offset in canvas coordinates (accounting for zoom)
-        const rect = canvasRef.current.getBoundingClientRect();
-        const mouseX = (e.clientX - rect.left - pan.x) / zoom;
-        const mouseY = (e.clientY - rect.top - pan.y) / zoom;
-        setDragOffset({ x: mouseX - node.x, y: mouseY - node.y });
+        }]);
       };
 
-      const handleMouseMove = useCallback((e) => {
-        const rect = canvasRef.current.getBoundingClientRect();
-
-        // Panning with middle mouse or space+drag
-        if (isPanning) {
-          setPan({
-            x: e.clientX - panStart.x,
-            y: e.clientY - panStart.y
-          });
-          return;
-        }
-
-        if (draggingNode) {
-          const x = (e.clientX - rect.left - pan.x) / zoom - dragOffset.x;
-          const y = (e.clientY - rect.top - pan.y) / zoom - dragOffset.y;
-          setNodes(prev => prev.map(n =>
-            n.id === draggingNode ? { ...n, x: Math.max(0, x), y: Math.max(0, y) } : n
-          ));
-        }
-
-        if (connectingFrom) {
-          const start = getNodeCenter(connectingFrom.nodeId, 'output');
-          const mouseX = (e.clientX - rect.left - pan.x) / zoom;
-          const mouseY = (e.clientY - rect.top - pan.y) / zoom;
-          setTempLine({ x1: start.x, y1: start.y, x2: mouseX, y2: mouseY });
-        }
-      }, [draggingNode, dragOffset, connectingFrom, setNodes, nodes, zoom, pan, isPanning, panStart]);
-
-      const handleCanvasMouseDown = (e) => {
-        // Middle mouse button or space for panning
-        if (e.button === 1) {
+      const handleCanvasMouseDown = e => {
+        if (e.button === 1 || e.button === 2) { // Middle or Right click
           e.preventDefault();
           setIsPanning(true);
           setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
         }
       };
 
+      const handleContextMenu = e => e.preventDefault();
+
+      const handleNodeMouseDown = (e, node) => {
+        if (e.target.closest('.node-handle') || ['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+        e.preventDefault();
+        e.stopPropagation();
+        setSelectedNode(node.id);
+        setDraggingNode(node.id);
+        const pos = screenToCanvas(e.clientX, e.clientY);
+        setDragOffset({ x: pos.x - node.x, y: pos.y - node.y });
+      };
+
+      const handleMouseMove = e => {
+        if (isPanning) {
+          setPan({ x: e.clientX - panStart.x, y: e.clientY - panStart.y });
+          return;
+        }
+
+        if (draggingNode) {
+          const pos = screenToCanvas(e.clientX, e.clientY);
+          setNodes(prev => prev.map(n => n.id === draggingNode ? { ...n, x: pos.x - dragOffset.x, y: pos.y - dragOffset.y } : n));
+        }
+
+        if (connectingFrom) {
+          const start = getNodeCenter(connectingFrom, 'out');
+          const mouse = screenToCanvas(e.clientX, e.clientY);
+          setTempLine({ ...start, x2: mouse.x, y2: mouse.y });
+        }
+      };
+
       const handleMouseUp = () => {
+        setIsPanning(false);
         setDraggingNode(null);
         setConnectingFrom(null);
         setTempLine(null);
-        setIsPanning(false);
       };
 
       const handleOutputMouseDown = (e, nodeId) => {
         e.stopPropagation();
-        setConnectingFrom({ nodeId });
+        setConnectingFrom(nodeId);
       };
 
-      const handleInputMouseUp = (e, targetNodeId) => {
+      const handleInputMouseUp = (e, targetId) => {
         e.stopPropagation();
-        if (connectingFrom && connectingFrom.nodeId !== targetNodeId) {
-          const exists = connections.some(c => c.from === connectingFrom.nodeId && c.to === targetNodeId);
-          if (!exists) {
-            setConnections(prev => [...prev, {
-              id: `conn-${Date.now()}`,
-              from: connectingFrom.nodeId,
-              to: targetNodeId
-            }]);
-          }
+        if (connectingFrom && connectingFrom !== targetId) {
+          const exists = connections.some(c => c.from === connectingFrom && c.to === targetId);
+          if (!exists) setConnections(prev => [...prev, { id: `conn-${Date.now()}`, from: connectingFrom, to: targetId }]);
         }
         setConnectingFrom(null);
         setTempLine(null);
       };
 
-      const updateNodeData = (nodeId, key, value) => {
-        setNodes(prev => prev.map(n =>
-          n.id === nodeId ? { ...n, data: { ...n.data, [key]: value } } : n
-        ));
-      };
+      const deleteConnection = id => setConnections(prev => prev.filter(c => c.id !== id));
 
-      const deleteConnection = (connId) => {
-        setConnections(prev => prev.filter(c => c.id !== connId));
+      const updateNodeData = (id, key, val) => {
+        setNodes(prev => prev.map(n => n.id === id ? { ...n, data: { ...n.data, [key]: val } } : n));
       };
 
       return (
-        <div className="canvas" ref={canvasRef}
-          onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}
-          onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}
-          onMouseDown={handleCanvasMouseDown}
+        <div className={`canvas ${isPanning ? 'panning' : ''}`} ref={canvasRef}
+          onDrop={handleDrop} onDragOver={e => e.preventDefault()}
+          onMouseDown={handleCanvasMouseDown} onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}
+          onContextMenu={handleContextMenu}
           onClick={() => setSelectedNode(null)}>
 
-          <div className="canvas-viewport"
-            style={{ transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})` }}>
+          <div className="canvas-viewport" style={{ transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})` }}>
             <div className="canvas-grid" />
+            <div className="canvas-origin" />
 
-            <svg className="connections-svg" style={{ position: 'absolute', width: '100%', height: '100%', overflow: 'visible' }}>
-              {connections.map(conn => {
-                const start = getNodeCenter(conn.from, 'output');
-                const end = getNodeCenter(conn.to, 'input');
-                const midX = (start.x + end.x) / 2;
+            <svg className="connections-layer" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+              {connections.map(c => {
+                const s = getNodeCenter(c.from, 'out');
+                const e = getNodeCenter(c.to, 'in');
+                const mx = (s.x + e.x) / 2;
                 return (
-                  <g key={conn.id} onClick={() => deleteConnection(conn.id)} style={{ cursor: 'pointer', pointerEvents: 'stroke' }}>
-                    <path className="connection-line"
-                      d={`M ${start.x} ${start.y} C ${midX} ${start.y}, ${midX} ${end.y}, ${end.x} ${end.y}`} />
-                  </g>
+                  <path key={c.id} className="connection" style={{ pointerEvents: 'stroke', cursor: 'pointer' }}
+                    d={`M${s.x},${s.y} C${mx},${s.y} ${mx},${e.y} ${e.x},${e.y}`}
+                    onClick={() => deleteConnection(c.id)} />
                 );
               })}
-              {tempLine && (
-                <path className="connection-line connection-line-temp"
-                  d={`M ${tempLine.x1} ${tempLine.y1} L ${tempLine.x2} ${tempLine.y2}`} />
-              )}
+              {tempLine && <path className="connection connection-temp" d={`M${tempLine.x},${tempLine.y} L${tempLine.x2},${tempLine.y2}`} />}
             </svg>
 
-            <div className="dropped-nodes">
+            <div className="nodes-layer">
               {nodes.map(node => {
-                const config = NODE_TYPES[node.type];
+                const cfg = NODE_TYPES[node.type];
                 return (
-                  <div key={node.id}
-                    ref={el => nodeRefs.current[node.id] = el}
-                    className={`dropped-node animate-in ${selectedNode === node.id ? 'selected' : ''} ${draggingNode === node.id ? 'dragging' : ''}`}
-                    style={{ left: node.x, top: node.y, '--node-color': config.color }}
-                    onMouseDown={(e) => handleNodeMouseDown(e, node)}>
+                  <div key={node.id} ref={el => nodeRefs.current[node.id] = el}
+                    className={`workflow-node animate-in ${selectedNode === node.id ? 'selected' : ''} ${draggingNode === node.id ? 'dragging' : ''}`}
+                    style={{ left: node.x, top: node.y, '--node-color': cfg.color }}
+                    onMouseDown={e => handleNodeMouseDown(e, node)}>
 
-                    {node.type !== 'trigger' && (
-                      <div className="node-handle node-handle-input"
-                        onMouseUp={(e) => handleInputMouseUp(e, node.id)} />
-                    )}
+                    {node.type !== 'trigger' && <div className="node-handle node-handle-in" onMouseUp={e => handleInputMouseUp(e, node.id)} />}
+                    <div className="node-handle node-handle-out" onMouseDown={e => handleOutputMouseDown(e, node.id)} />
 
-                    <div className="node-handle node-handle-output"
-                      onMouseDown={(e) => handleOutputMouseDown(e, node.id)} />
-
-                    <div className="dropped-node-header">
-                      <span>{config.icon}</span>
-                      <span className="node-label">{node.data.label}</span>
+                    <div className="node-header">
+                      <div className="node-header-icon">{cfg.icon}</div>
+                      <span className="node-header-title">{node.data.label}</span>
                     </div>
 
                     {node.type === 'llm' && (
-                      <div className="dropped-node-body">
-                        <div className="dropped-node-field">
-                          <label>Provider</label>
-                          <select value={node.data.provider || 'groq'}
-                            onChange={(e) => updateNodeData(node.id, 'provider', e.target.value)}>
-                            {Object.keys(LLM_PROVIDERS).map(p => (
-                              <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>
-                            ))}
+                      <div className="node-content">
+                        <div className="node-field">
+                          <label className="node-field-label">Provider</label>
+                          <select className="node-field-select" value={node.data.provider || 'groq'}
+                            onChange={e => updateNodeData(node.id, 'provider', e.target.value)}>
+                            {Object.keys(LLM_PROVIDERS).map(p => <option key={p} value={p}>{p}</option>)}
                           </select>
                         </div>
-                        <div className="dropped-node-field">
-                          <label>Model</label>
-                          <select value={node.data.model || ''}
-                            onChange={(e) => updateNodeData(node.id, 'model', e.target.value)}>
-                            {(LLM_PROVIDERS[node.data.provider] || []).map(m => (
-                              <option key={m} value={m}>{m}</option>
-                            ))}
+                        <div className="node-field">
+                          <label className="node-field-label">Model</label>
+                          <select className="node-field-select" value={node.data.model || ''} onChange={e => updateNodeData(node.id, 'model', e.target.value)}>
+                            {(LLM_PROVIDERS[node.data.provider] || []).map(m => <option key={m} value={m}>{m}</option>)}
                           </select>
                         </div>
-                        <div className="dropped-node-field">
-                          <label>Prompt</label>
-                          <textarea value={node.data.prompt || ''}
-                            onChange={(e) => updateNodeData(node.id, 'prompt', e.target.value)}
-                            placeholder="Enter prompt..." rows={2} />
+                        <div className="node-field">
+                          <label className="node-field-label">Prompt</label>
+                          <textarea className="node-field-textarea" value={node.data.prompt || ''} onChange={e => updateNodeData(node.id, 'prompt', e.target.value)} placeholder="Enter your prompt..." />
                         </div>
                       </div>
                     )}
 
                     {node.type === 'http' && (
-                      <div className="dropped-node-body">
-                        <div className="dropped-node-field">
-                          <label>Method</label>
-                          <select value={node.data.config?.method || 'GET'}
-                            onChange={(e) => updateNodeData(node.id, 'config', { ...node.data.config, method: e.target.value })}>
-                            <option value="GET">GET</option>
-                            <option value="POST">POST</option>
-                            <option value="PUT">PUT</option>
-                            <option value="DELETE">DELETE</option>
+                      <div className="node-content">
+                        <div className="node-field">
+                          <label className="node-field-label">Method</label>
+                          <select className="node-field-select" value={node.data.config?.method || 'GET'}
+                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, method: e.target.value })}>
+                            <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
                           </select>
                         </div>
-                        <div className="dropped-node-field">
-                          <label>URL</label>
-                          <input type="text" value={node.data.config?.url || ''}
-                            onChange={(e) => updateNodeData(node.id, 'config', { ...node.data.config, url: e.target.value })}
-                            placeholder="https://api.example.com" />
+                        <div className="node-field">
+                          <label className="node-field-label">URL</label>
+                          <input className="node-field-input" value={node.data.config?.url || ''} placeholder="https://api.example.com"
+                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, url: e.target.value })} />
                         </div>
                       </div>
                     )}
 
                     {node.type === 'condition' && (
-                      <div className="dropped-node-body">
-                        <div className="dropped-node-field">
-                          <label>Condition</label>
-                          <input type="text" value={node.data.config?.condition || ''}
-                            onChange={(e) => updateNodeData(node.id, 'config', { ...node.data.config, condition: e.target.value })}
-                            placeholder="value > 10" style={{ fontFamily: 'monospace' }} />
+                      <div className="node-content">
+                        <div className="node-field">
+                          <label className="node-field-label">Expression</label>
+                          <input className="node-field-input node-field-code" value={node.data.config?.condition || ''} placeholder="value > 10"
+                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, condition: e.target.value })} />
                         </div>
                       </div>
                     )}
 
                     {node.type === 'code' && (
-                      <div className="dropped-node-body">
-                        <div className="dropped-node-field">
-                          <label>Code</label>
-                          <textarea value={node.data.config?.code || ''}
-                            onChange={(e) => updateNodeData(node.id, 'config', { ...node.data.config, code: e.target.value })}
-                            placeholder="return data" rows={2} style={{ fontFamily: 'monospace' }} />
+                      <div className="node-content">
+                        <div className="node-field">
+                          <label className="node-field-label">Script</label>
+                          <textarea className="node-field-textarea node-field-code" value={node.data.config?.code || ''} placeholder="return data"
+                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, code: e.target.value })} />
                         </div>
                       </div>
                     )}
@@ -987,41 +1127,34 @@
           {nodes.length === 0 && (
             <div className="canvas-empty">
               <div className="canvas-empty-icon">🔱</div>
-              <h3>Start Building</h3>
-              <p>Drag nodes from the left panel to create your workflow</p>
+              <div className="canvas-empty-title">Build your workflow</div>
+              <div className="canvas-empty-desc">Drag nodes from the sidebar to get started</div>
             </div>
           )}
 
-          <div className="zoom-controls">
-            <button className="zoom-btn" onClick={zoomIn} title="Zoom In">+</button>
-            <div className="zoom-level">{Math.round(zoom * 100)}%</div>
-            <button className="zoom-btn" onClick={zoomOut} title="Zoom Out">−</button>
-            <button className="zoom-btn" onClick={resetZoom} title="Reset" style={{ fontSize: 12 }}>⟲</button>
+          <div className="canvas-controls">
+            <button className="zoom-btn" onClick={() => setZoom(z => Math.min(2, z + 0.25))}>+</button>
+            <div className="zoom-display">{Math.round(zoom * 100)}%</div>
+            <button className="zoom-btn" onClick={() => setZoom(z => Math.max(0.25, z - 0.25))}>−</button>
+            <button className="zoom-btn" onClick={() => { setZoom(1); setPan({ x: 400, y: 200 }); }}>⌂</button>
           </div>
         </div>
       );
     }
 
+    // ========== GUARDIAN ==========
     function Guardian({ nodes, connections }) {
       const errors = [];
       const warnings = [];
 
       if (nodes.length === 0) {
-        errors.push('Add nodes to start building');
+        errors.push('No nodes in workflow');
       } else {
-        const hasTrigger = nodes.some(n => n.type === 'trigger');
-        if (!hasTrigger) errors.push('Add a Trigger node to start');
-
+        if (!nodes.some(n => n.type === 'trigger')) errors.push('Missing trigger node');
         nodes.forEach(n => {
-          if (n.type === 'llm' && !n.data.prompt) warnings.push(`LLM "${n.data.label}" has no prompt`);
-          if (n.type === 'http' && !n.data.config?.url) warnings.push(`HTTP "${n.data.label}" has no URL`);
-        });
-
-        nodes.forEach(n => {
-          if (n.type !== 'trigger') {
-            const hasInput = connections.some(c => c.to === n.id);
-            if (!hasInput) warnings.push(`"${n.data.label}" has no input connection`);
-          }
+          if (n.type === 'llm' && !n.data.prompt) warnings.push(`"${n.data.label}" needs a prompt`);
+          if (n.type === 'http' && !n.data.config?.url) warnings.push(`"${n.data.label}" needs a URL`);
+          if (n.type !== 'trigger' && !connections.some(c => c.to === n.id)) warnings.push(`"${n.data.label}" is disconnected`);
         });
       }
 
@@ -1030,41 +1163,30 @@
       return (
         <aside className="guardian">
           <div className="guardian-header">
-            <div className="guardian-title"><span>🛡️</span><span>Guardian</span></div>
-            <span style={{ fontSize: 12, color: isValid ? '#22c55e' : '#ef4444' }}>
-              {isValid ? '✓ Valid' : '✕ Errors'}
-            </span>
+            <div className="guardian-title">
+              <span>🛡️</span>
+              <span>Guardian</span>
+            </div>
+            <div className="guardian-status">
+              <div className={`status-dot ${isValid ? '' : 'error'}`} />
+              <span>{isValid ? 'Valid' : 'Issues'}</span>
+            </div>
           </div>
-          <div className="guardian-content">
+          <div className="guardian-body">
             <div className="guardian-section">
-              <h4>Validation</h4>
-              {errors.map((err, i) => (
-                <div key={i} className="guardian-alert error animate-in">
-                  <span className="alert-icon">❌</span>
-                  <span className="alert-message">{err}</span>
-                </div>
-              ))}
-              {warnings.map((warn, i) => (
-                <div key={i} className="guardian-alert animate-in">
-                  <span className="alert-icon">⚠️</span>
-                  <span className="alert-message">{warn}</span>
-                </div>
-              ))}
+              <div className="guardian-section-title">Validation</div>
+              {errors.map((e, i) => <div key={i} className="alert error animate-in"><span className="alert-icon">✕</span><span className="alert-text">{e}</span></div>)}
+              {warnings.map((w, i) => <div key={i} className="alert animate-in"><span className="alert-icon">!</span><span className="alert-text">{w}</span></div>)}
               {isValid && warnings.length === 0 && nodes.length > 0 && (
-                <div className="guardian-alert success animate-in">
-                  <span className="alert-icon">✨</span>
-                  <span className="alert-message">Workflow looks good!</span>
-                </div>
+                <div className="alert success animate-in"><span className="alert-icon">✓</span><span className="alert-text">Workflow is ready to run</span></div>
               )}
-              {nodes.length === 0 && (
-                <div className="guardian-empty"><span>🔱</span><p>Add nodes to start</p></div>
-              )}
+              {nodes.length === 0 && <div className="guardian-empty"><div className="guardian-empty-icon">📋</div><div className="guardian-empty-text">Add nodes to validate</div></div>}
             </div>
             <div className="guardian-section">
-              <h4>Stats</h4>
-              <div className="guardian-stats">
-                <div className="stat"><span className="stat-value">{nodes.length}</span><span className="stat-label">Nodes</span></div>
-                <div className="stat"><span className="stat-value">{connections.length}</span><span className="stat-label">Connections</span></div>
+              <div className="guardian-section-title">Statistics</div>
+              <div className="stats-grid">
+                <div className="stat-card"><div className="stat-value">{nodes.length}</div><div className="stat-label">Nodes</div></div>
+                <div className="stat-card"><div className="stat-value">{connections.length}</div><div className="stat-label">Edges</div></div>
               </div>
             </div>
           </div>
@@ -1072,66 +1194,45 @@
       );
     }
 
+    // ========== APP ==========
     function App() {
-      const [workflowName, setWorkflowName] = useState('New Workflow');
+      const [name, setName] = useState('Untitled workflow');
       const [nodes, setNodes] = useState([]);
       const [connections, setConnections] = useState([]);
-      const [selectedNode, setSelectedNode] = useState(null);
-      const [guardianOpen, setGuardianOpen] = useState(true);
+      const [selected, setSelected] = useState(null);
 
       const handleDragStart = (e, type) => {
         e.dataTransfer.setData('nodeType', type);
         e.dataTransfer.effectAllowed = 'move';
       };
 
-      const handleClear = () => { setNodes([]); setConnections([]); setSelectedNode(null); };
-
-      const handleRun = () => {
-        if (nodes.length === 0) return alert('Add nodes first!');
-        if (!nodes.some(n => n.type === 'trigger')) return alert('Add a Trigger node!');
-        alert('🚀 Workflow ready!\n\nBackend needed for execution.');
-      };
-
-      const handleExport = () => {
-        const data = JSON.stringify({ name: workflowName, nodes, connections }, null, 2);
-        const blob = new Blob([data], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href = url;
-        a.download = `${workflowName.replace(/\s+/g, '_')}.json`; a.click();
-      };
-
-      const handleImport = () => {
-        const input = document.createElement('input');
-        input.type = 'file'; input.accept = '.json';
-        input.onchange = (e) => {
-          const file = e.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              try {
-                const data = JSON.parse(e.target.result);
-                setWorkflowName(data.name || 'Imported');
-                setNodes(data.nodes || []);
-                setConnections(data.connections || []);
-              } catch { alert('Invalid file'); }
-            };
-            reader.readAsText(file);
-          }
-        };
-        input.click();
-      };
-
       return (
         <div className="app">
-          <TopBar workflowName={workflowName} setWorkflowName={setWorkflowName}
-            onClear={handleClear} onRun={handleRun} onExport={handleExport} onImport={handleImport}
-            guardianOpen={guardianOpen} setGuardianOpen={setGuardianOpen} />
-          <div className="main-content">
+          <TopBar name={name} setName={setName}
+            onClear={() => { setNodes([]); setConnections([]); }}
+            onRun={() => alert(nodes.length ? '🚀 Workflow ready! Connect to backend to execute.' : 'Add nodes first!')}
+            onExport={() => {
+              const blob = new Blob([JSON.stringify({ name, nodes, connections }, null, 2)], { type: 'application/json' });
+              const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${name.replace(/\s+/g, '_')}.json`; a.click();
+            }}
+            onImport={() => {
+              const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+              input.onchange = e => {
+                const f = e.target.files[0];
+                if (f) {
+                  const r = new FileReader();
+                  r.onload = ev => { try { const d = JSON.parse(ev.target.result); setName(d.name || 'Imported'); setNodes(d.nodes || []); setConnections(d.connections || []); } catch { } };
+                  r.readAsText(f);
+                }
+              };
+              input.click();
+            }}
+          />
+          <main className="main">
             <Sidebar onDragStart={handleDragStart} />
-            <Canvas nodes={nodes} setNodes={setNodes} connections={connections} setConnections={setConnections}
-              selectedNode={selectedNode} setSelectedNode={setSelectedNode} />
-            {guardianOpen && <Guardian nodes={nodes} connections={connections} />}
-          </div>
+            <Canvas nodes={nodes} setNodes={setNodes} connections={connections} setConnections={setConnections} selectedNode={selected} setSelectedNode={setSelected} />
+            <Guardian nodes={nodes} connections={connections} />
+          </main>
         </div>
       );
     }
