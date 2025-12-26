@@ -3,20 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔱</text></svg>" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23a855f7' d='M16 2L4 14l3 3 9-9 9 9 3-3L16 2zm0 10l-6 6v12h4v-8h4v8h4V18l-6-6z'/%3E%3C/svg%3E" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Tritan - AI-Native Workflow Engine" />
-  <title>Tritan 🔱 - AI Workflow Engine</title>
+  <title>Tritan - AI Workflow Engine</title>
 
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
 
   <style>
@@ -29,572 +28,470 @@
     }
 
     :root {
-      /* Premium Dark Theme */
-      --bg-base: #09090b;
-      --bg-elevated: #18181b;
-      --bg-muted: #27272a;
-      --bg-subtle: #3f3f46;
+      --bg-0: #0c0c0e;
+      --bg-1: #141416;
+      --bg-2: #1c1c1f;
+      --bg-3: #28282c;
+      --bg-hover: #2f2f34;
 
-      /* Accent Colors */
-      --accent: #a855f7;
-      --accent-hover: #c084fc;
-      --accent-muted: rgba(168, 85, 247, 0.15);
-      --cyan: #06b6d4;
-      --cyan-muted: rgba(6, 182, 212, 0.15);
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --accent-bg: rgba(124, 58, 237, 0.12);
 
-      /* Status Colors */
-      --success: #10b981;
-      --warning: #f59e0b;
-      --error: #ef4444;
-      --info: #3b82f6;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --pink: #ec4899;
+      --orange: #f97316;
+      --teal: #14b8a6;
+      --purple: #8b5cf6;
 
-      /* Node Colors */
-      --node-trigger: #10b981;
-      --node-action: #6366f1;
-      --node-condition: #f59e0b;
-      --node-loop: #8b5cf6;
-      --node-llm: #ec4899;
-      --node-http: #3b82f6;
-      --node-code: #14b8a6;
-      --node-transform: #f97316;
+      --text-0: #ffffff;
+      --text-1: #e4e4e7;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
 
-      /* Text */
-      --text: #fafafa;
-      --text-muted: #a1a1aa;
-      --text-subtle: #71717a;
+      --border: #27272a;
+      --border-light: #3f3f46;
 
-      /* Borders */
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.15);
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
-      --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.2);
-
-      /* Radius */
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
-      --radius-full: 9999px;
+      --radius: 8px;
+      --radius-lg: 12px;
     }
 
     html,
     body,
     #root {
       height: 100%;
-      width: 100%;
-      overflow: hidden;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-base);
-      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-0);
+      color: var(--text-1);
+      font-size: 13px;
       -webkit-font-smoothing: antialiased;
     }
 
     .app {
-      display: grid;
-      grid-template-rows: auto 1fr;
+      display: flex;
+      flex-direction: column;
       height: 100vh;
     }
 
-    /* ========== TOP BAR ========== */
-    .topbar {
+    /* ===== HEADER ===== */
+    .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 56px;
-      padding: 0 16px;
-      background: var(--bg-elevated);
+      height: 48px;
+      padding: 0 12px;
+      background: var(--bg-1);
       border-bottom: 1px solid var(--border);
-      gap: 16px;
     }
 
-    .topbar-section {
+    .header-left,
+    .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding-right: 16px;
-      border-right: 1px solid var(--border);
+      gap: 8px;
+      padding: 0 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-0);
     }
 
-    .logo-icon {
-      width: 32px;
-      height: 32px;
+    .logo-mark {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, var(--accent), var(--cyan));
-      border-radius: var(--radius-md);
-      font-size: 18px;
     }
 
-    .logo-text {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+    .logo-mark svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
     }
 
-    .workflow-input {
-      background: var(--bg-muted);
+    .sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 4px;
+    }
+
+    .input {
+      background: var(--bg-2);
       border: 1px solid var(--border);
-      padding: 8px 14px;
+      padding: 6px 10px;
       font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      border-radius: var(--radius-md);
-      width: 180px;
-      transition: all 0.2s;
+      color: var(--text-1);
+      border-radius: 6px;
+      width: 160px;
+      font-family: inherit;
     }
 
-    .workflow-input:hover {
-      border-color: var(--border-hover);
-    }
-
-    .workflow-input:focus {
+    .input:focus {
       outline: none;
       border-color: var(--accent);
-      background: var(--bg-elevated);
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      height: 34px;
-      padding: 0 14px;
-      font-size: 13px;
+      gap: 5px;
+      height: 30px;
+      padding: 0 10px;
+      font-size: 12px;
       font-weight: 500;
       font-family: inherit;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: all 0.15s;
+      border-radius: 6px;
       border: 1px solid var(--border);
-      background: var(--bg-muted);
-      color: var(--text);
+      background: var(--bg-2);
+      color: var(--text-1);
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
     }
 
     .btn:hover {
-      background: var(--bg-subtle);
-      border-color: var(--border-hover);
+      background: var(--bg-3);
+      border-color: var(--border-light);
     }
 
     .btn-icon {
-      width: 34px;
       padding: 0;
+      width: 30px;
+      justify-content: center;
     }
 
-    .btn-accent {
+    .btn-primary {
       background: var(--accent);
       border-color: var(--accent);
       color: white;
-      font-weight: 600;
     }
 
-    .btn-accent:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
+    .btn-primary:hover {
+      background: var(--accent-light);
+      border-color: var(--accent-light);
     }
 
-    .btn-ghost {
-      background: transparent;
-      border-color: transparent;
-    }
-
-    .btn-ghost:hover {
-      background: var(--bg-muted);
-    }
-
-    .divider {
-      width: 1px;
-      height: 24px;
-      background: var(--border);
-    }
-
-    /* ========== MAIN LAYOUT ========== */
-    .main {
-      display: grid;
-      grid-template-columns: 220px 1fr 300px;
+    /* ===== LAYOUT ===== */
+    .layout {
+      display: flex;
+      flex: 1;
       overflow: hidden;
     }
 
-    /* ========== SIDEBAR ========== */
+    /* ===== SIDEBAR ===== */
     .sidebar {
-      background: var(--bg-elevated);
+      width: 200px;
+      background: var(--bg-1);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    .sidebar-header {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
+    .sidebar-section {
+      padding: 12px;
     }
 
     .sidebar-title {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-subtle);
-    }
-
-    .node-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 8px;
-    }
-
-    .node-category {
-      margin-bottom: 8px;
-    }
-
-    .node-category-title {
       font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: var(--text-subtle);
-      padding: 8px;
+      color: var(--text-3);
+      margin-bottom: 8px;
     }
 
     .node-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: var(--radius-md);
+      gap: 8px;
+      padding: 8px;
+      border-radius: 6px;
       cursor: grab;
-      transition: all 0.15s;
       margin-bottom: 2px;
+      transition: background 0.1s;
     }
 
     .node-item:hover {
-      background: var(--bg-muted);
+      background: var(--bg-2);
     }
 
     .node-item:active {
       cursor: grabbing;
     }
 
-    .node-icon {
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      background: var(--node-color);
-      opacity: 0.9;
+    .node-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
     }
 
-    .node-meta {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .node-name {
+    .node-text {
       font-size: 13px;
       font-weight: 500;
+      color: var(--text-1);
     }
 
-    .node-desc {
-      font-size: 11px;
-      color: var(--text-subtle);
-      margin-top: 1px;
-    }
-
-    /* ========== CANVAS ========== */
+    /* ===== CANVAS ===== */
     .canvas {
+      flex: 1;
       position: relative;
       overflow: hidden;
-      background: var(--bg-base);
+      background: var(--bg-0);
     }
 
     .canvas.panning {
       cursor: grabbing;
     }
 
-    .canvas-viewport {
+    .viewport {
       position: absolute;
-      inset: 0;
       transform-origin: 0 0;
     }
 
-    .canvas-grid {
+    .grid {
       position: absolute;
-      width: 10000px;
-      height: 10000px;
-      left: -5000px;
-      top: -5000px;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.4;
+      width: 8000px;
+      height: 8000px;
+      left: -4000px;
+      top: -4000px;
+      background-size: 20px 20px;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      opacity: 0.5;
     }
 
-    .canvas-origin {
+    .connections {
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      left: -4px;
-      top: -4px;
-      box-shadow: 0 0 12px var(--accent);
-    }
-
-    /* Connections */
-    .connections-layer {
-      position: absolute;
-      inset: 0;
       pointer-events: none;
       overflow: visible;
     }
 
-    .connection {
+    .edge {
       fill: none;
       stroke: var(--accent);
       stroke-width: 2;
-      opacity: 0.6;
-      transition: opacity 0.15s;
+      opacity: 0.5;
     }
 
-    .connection:hover {
+    .edge:hover {
       opacity: 1;
-      stroke-width: 3;
     }
 
-    .connection-temp {
-      stroke: var(--cyan);
-      stroke-dasharray: 6 4;
-      opacity: 0.8;
+    .edge-temp {
+      stroke: var(--accent-light);
+      stroke-dasharray: 4;
+      opacity: 0.6;
     }
 
-    /* Nodes Layer */
-    .nodes-layer {
+    .nodes {
       position: absolute;
-      inset: 0;
     }
 
-    .workflow-node {
+    .node {
       position: absolute;
-      min-width: 200px;
-      max-width: 280px;
-      background: var(--bg-elevated);
+      min-width: 180px;
+      background: var(--bg-1);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      cursor: move;
-      transition: box-shadow 0.15s, border-color 0.15s;
+      cursor: grab;
+      user-select: none;
     }
 
-    .workflow-node::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--node-color);
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    .node:hover {
+      border-color: var(--border-light);
     }
 
-    .workflow-node:hover {
-      border-color: var(--border-hover);
-    }
-
-    .workflow-node.selected {
+    .node.selected {
       border-color: var(--accent);
-      box-shadow: var(--shadow-lg), 0 0 0 2px var(--accent-muted);
+      box-shadow: 0 0 0 3px var(--accent-bg);
     }
 
-    .workflow-node.dragging {
-      opacity: 0.85;
-      z-index: 1000;
+    .node.dragging {
+      opacity: 0.8;
+      z-index: 100;
+      cursor: grabbing;
     }
 
-    .node-header {
+    .node-bar {
+      height: 3px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      background: var(--node-color);
+    }
+
+    .node-head {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
     }
 
-    .node-header-icon {
-      width: 24px;
-      height: 24px;
+    .node-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--node-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--node-color);
-      border-radius: var(--radius-sm);
-      font-size: 12px;
     }
 
-    .node-header-title {
+    .node-icon svg {
+      width: 12px;
+      height: 12px;
+      fill: white;
+    }
+
+    .node-title {
       font-size: 13px;
       font-weight: 600;
+      color: var(--text-0);
     }
 
-    .node-content {
-      padding: 12px 14px;
+    .node-body {
+      padding: 10px 12px;
     }
 
-    .node-field {
-      margin-bottom: 10px;
+    .field {
+      margin-bottom: 8px;
     }
 
-    .node-field:last-child {
+    .field:last-child {
       margin-bottom: 0;
     }
 
-    .node-field-label {
+    .field-label {
       display: block;
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 500;
+      color: var(--text-3);
       text-transform: uppercase;
       letter-spacing: 0.3px;
-      color: var(--text-subtle);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    .node-field-input,
-    .node-field-select,
-    .node-field-textarea {
+    .field-input,
+    .field-select,
+    .field-textarea {
       width: 100%;
-      padding: 8px 10px;
+      padding: 6px 8px;
       font-size: 12px;
       font-family: inherit;
-      color: var(--text);
-      background: var(--bg-muted);
+      color: var(--text-1);
+      background: var(--bg-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      transition: all 0.15s;
+      border-radius: 4px;
     }
 
-    .node-field-input:focus,
-    .node-field-select:focus,
-    .node-field-textarea:focus {
+    .field-input:focus,
+    .field-select:focus,
+    .field-textarea:focus {
       outline: none;
       border-color: var(--accent);
-      background: var(--bg-base);
     }
 
-    .node-field-textarea {
-      resize: vertical;
-      min-height: 60px;
+    .field-textarea {
+      resize: none;
+      min-height: 50px;
     }
 
-    .node-field-code {
+    .field-code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
     }
 
-    /* Node Handles */
-    .node-handle {
+    .handle {
       position: absolute;
-      width: 12px;
-      height: 12px;
-      background: var(--bg-subtle);
-      border: 2px solid var(--text-subtle);
+      width: 10px;
+      height: 10px;
+      background: var(--bg-3);
+      border: 2px solid var(--text-3);
       border-radius: 50%;
       cursor: crosshair;
-      transition: all 0.15s;
-      z-index: 10;
+      transition: transform 0.1s, background 0.1s;
+      z-index: 5;
     }
 
-    .node-handle:hover {
-      transform: scale(1.4);
+    .handle:hover {
+      transform: scale(1.3);
       background: var(--accent);
       border-color: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
     }
 
-    .node-handle-in {
-      left: -6px;
+    .handle-in {
+      left: -5px;
       top: 50%;
       transform: translateY(-50%);
-      border-color: var(--cyan);
     }
 
-    .node-handle-in:hover {
-      transform: translateY(-50%) scale(1.4);
-      background: var(--cyan);
+    .handle-in:hover {
+      transform: translateY(-50%) scale(1.3);
     }
 
-    .node-handle-out {
-      right: -6px;
+    .handle-out {
+      right: -5px;
       top: 50%;
       transform: translateY(-50%);
-      border-color: var(--accent);
     }
 
-    .node-handle-out:hover {
-      transform: translateY(-50%) scale(1.4);
-      background: var(--accent);
+    .handle-out:hover {
+      transform: translateY(-50%) scale(1.3);
     }
 
     /* Canvas Controls */
-    .canvas-controls {
+    .controls {
       position: absolute;
-      bottom: 16px;
-      left: 16px;
+      bottom: 12px;
+      left: 12px;
       display: flex;
-      gap: 4px;
-      background: var(--bg-elevated);
-      padding: 6px;
-      border-radius: var(--radius-md);
+      gap: 1px;
+      background: var(--bg-1);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
+      border-radius: 6px;
+      overflow: hidden;
     }
 
-    .zoom-btn {
-      width: 32px;
-      height: 32px;
+    .ctrl-btn {
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: transparent;
       border: none;
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-      font-size: 16px;
+      color: var(--text-2);
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.15s;
     }
 
-    .zoom-btn:hover {
-      background: var(--bg-muted);
-      color: var(--text);
+    .ctrl-btn:hover {
+      background: var(--bg-2);
+      color: var(--text-0);
     }
 
-    .zoom-display {
-      display: flex;
-      align-items: center;
+    .ctrl-label {
       padding: 0 8px;
       font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      min-width: 48px;
-      justify-content: center;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
     }
 
-    .canvas-empty {
+    .empty {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -603,191 +500,150 @@
       pointer-events: none;
     }
 
-    .canvas-empty-icon {
-      font-size: 56px;
-      margin-bottom: 16px;
-      opacity: 0.3;
-    }
-
-    .canvas-empty-title {
-      font-size: 20px;
+    .empty-title {
+      font-size: 16px;
       font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      color: var(--text-2);
+      margin-bottom: 4px;
     }
 
-    .canvas-empty-desc {
-      font-size: 14px;
-      color: var(--text-subtle);
+    .empty-desc {
+      font-size: 13px;
+      color: var(--text-3);
     }
 
-    /* ========== GUARDIAN PANEL ========== */
-    .guardian {
-      background: var(--bg-elevated);
+    /* ===== PANEL ===== */
+    .panel {
+      width: 260px;
+      background: var(--bg-1);
       border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    .guardian-header {
+    .panel-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px;
+      padding: 12px;
       border-bottom: 1px solid var(--border);
     }
 
-    .guardian-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .panel-title {
       font-size: 13px;
       font-weight: 600;
-    }
-
-    .guardian-status {
       display: flex;
       align-items: center;
       gap: 6px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--success);
     }
 
-    .status-dot.error {
-      background: var(--error);
+    .status-dot.ok {
+      background: var(--green);
     }
 
-    .guardian-body {
+    .status-dot.err {
+      background: var(--red);
+    }
+
+    .panel-body {
       flex: 1;
       overflow-y: auto;
-      padding: 16px;
+      padding: 12px;
     }
 
-    .guardian-section {
-      margin-bottom: 20px;
+    .panel-section {
+      margin-bottom: 16px;
     }
 
-    .guardian-section:last-child {
+    .panel-section:last-child {
       margin-bottom: 0;
     }
 
-    .guardian-section-title {
+    .panel-label {
       font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: var(--text-subtle);
-      margin-bottom: 10px;
-    }
-
-    .alert {
-      display: flex;
-      gap: 10px;
-      padding: 10px 12px;
-      background: var(--bg-muted);
-      border-radius: var(--radius-md);
+      color: var(--text-3);
       margin-bottom: 8px;
-      border-left: 3px solid var(--warning);
     }
 
-    .alert.error {
-      border-color: var(--error);
-      background: rgba(239, 68, 68, 0.08);
-    }
-
-    .alert.success {
-      border-color: var(--success);
-      background: rgba(16, 185, 129, 0.08);
-    }
-
-    .alert-icon {
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .alert-text {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .guardian-empty {
+    .msg {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      text-align: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: var(--bg-2);
+      border-radius: 6px;
+      margin-bottom: 6px;
+      border-left: 2px solid var(--yellow);
     }
 
-    .guardian-empty-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-      opacity: 0.4;
+    .msg.err {
+      border-color: var(--red);
     }
 
-    .guardian-empty-text {
-      font-size: 13px;
-      color: var(--text-subtle);
+    .msg.ok {
+      border-color: var(--green);
     }
 
-    .stats-grid {
+    .msg-icon {
+      font-size: 11px;
+    }
+
+    .msg-text {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    .stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
 
-    .stat-card {
-      background: var(--bg-muted);
-      border-radius: var(--radius-md);
-      padding: 14px;
+    .stat {
+      background: var(--bg-2);
+      border-radius: 6px;
+      padding: 12px;
       text-align: center;
     }
 
-    .stat-value {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 10px;
+    .stat-num {
+      font-size: 24px;
       font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stat-lbl {
+      font-size: 10px;
+      color: var(--text-3);
       text-transform: uppercase;
-      letter-spacing: 0.3px;
-      color: var(--text-subtle);
-      margin-top: 6px;
+      margin-top: 2px;
     }
 
-    /* ========== ANIMATIONS ========== */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.96);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    .panel-empty {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-3);
+      font-size: 12px;
     }
 
-    .animate-in {
-      animation: fadeIn 0.15s ease-out;
-    }
-
-    /* ========== SCROLLBAR ========== */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
 
     ::-webkit-scrollbar-track {
@@ -795,12 +651,8 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--bg-subtle);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-subtle);
+      background: var(--bg-3);
+      border-radius: 3px;
     }
   </style>
 </head>
@@ -811,310 +663,259 @@
   <script type="text/babel">
     const { useState, useRef, useCallback, useEffect } = React;
 
-    const NODE_TYPES = {
-      trigger: { label: 'Trigger', color: 'var(--node-trigger)', icon: '⚡', desc: 'Start point', category: 'flow' },
-      action: { label: 'Action', color: 'var(--node-action)', icon: '▶', desc: 'Execute task', category: 'flow' },
-      condition: { label: 'Condition', color: 'var(--node-condition)', icon: '◇', desc: 'Branch logic', category: 'flow' },
-      loop: { label: 'Loop', color: 'var(--node-loop)', icon: '↻', desc: 'Iterate items', category: 'flow' },
-      llm: { label: 'LLM', color: 'var(--node-llm)', icon: '✦', desc: 'AI inference', category: 'ai' },
-      http: { label: 'HTTP', color: 'var(--node-http)', icon: '⇄', desc: 'API call', category: 'data' },
-      code: { label: 'Code', color: 'var(--node-code)', icon: '{ }', desc: 'Custom script', category: 'data' },
-      transform: { label: 'Transform', color: 'var(--node-transform)', icon: '⟷', desc: 'Map data', category: 'data' }
+    // SVG Icons as components
+    const Icons = {
+      play: <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>,
+      zap: <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>,
+      git: <svg viewBox="0 0 24 24"><path d="M6 3v12m0 6v-6m6-12v6m0 12V15m6-12v18M6 9h12M6 15h6" /></svg>,
+      loop: <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4m14 4v2a4 4 0 0 1-4 4H3" /></svg>,
+      cpu: <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h6m-6 0v6M15 3h4a2 2 0 0 1 2 2v4m-6-6v6m6 0V5m0 4h-6m6 6v4a2 2 0 0 1-2 2h-4m6-6h-6m0 6v-6m-6 6H5a2 2 0 0 1-2-2v-4m6 6v-6m-6 0v4m0-4h6" /></svg>,
+      globe: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
+      code: <svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" /></svg>,
+      shuffle: <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" /></svg>,
+      shield: <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
+      folder: <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>,
+      download: <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>,
+      trash: <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>,
     };
 
-    const LLM_PROVIDERS = {
+    const NODES = {
+      trigger: { label: 'Trigger', color: 'var(--green)', icon: Icons.zap, cat: 'flow' },
+      action: { label: 'Action', color: 'var(--blue)', icon: Icons.play, cat: 'flow' },
+      condition: { label: 'Condition', color: 'var(--yellow)', icon: Icons.git, cat: 'flow' },
+      loop: { label: 'Loop', color: 'var(--purple)', icon: Icons.loop, cat: 'flow' },
+      llm: { label: 'LLM', color: 'var(--pink)', icon: Icons.cpu, cat: 'ai' },
+      http: { label: 'HTTP', color: 'var(--blue)', icon: Icons.globe, cat: 'data' },
+      code: { label: 'Code', color: 'var(--teal)', icon: Icons.code, cat: 'data' },
+      transform: { label: 'Transform', color: 'var(--orange)', icon: Icons.shuffle, cat: 'data' },
+    };
+
+    const LLM_MODELS = {
       groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768'],
-      openrouter: ['anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 'google/gemini-2.0-flash-exp:free'],
+      openrouter: ['anthropic/claude-3.5-sonnet', 'openai/gpt-4o'],
       cerebras: ['llama3.1-8b', 'llama3.1-70b'],
       gemini: ['gemini-2.0-flash-exp', 'gemini-1.5-pro']
     };
 
-    const CATEGORIES = { flow: 'Control Flow', ai: 'AI & ML', data: 'Data' };
-
-    // ========== TOPBAR ==========
-    function TopBar({ name, setName, onClear, onRun, onExport, onImport }) {
+    function Header({ name, setName, onClear, onRun, onExport, onImport }) {
       return (
-        <header className="topbar">
-          <div className="topbar-section">
+        <header className="header">
+          <div className="header-left">
             <div className="logo">
-              <div className="logo-icon">🔱</div>
-              <span className="logo-text">Tritan</span>
+              <div className="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2L4 10l2 2 6-6 6 6 2-2-8-8zm0 8l-4 4v8h3v-6h2v6h3v-8l-4-4z" /></svg></div>
+              <span>Tritan</span>
             </div>
-            <input className="workflow-input" value={name} onChange={e => setName(e.target.value)} placeholder="Untitled workflow" />
+            <div className="sep" />
+            <input className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Untitled" />
           </div>
-          <div className="topbar-section">
-            <button className="btn btn-ghost btn-icon" onClick={onImport} title="Import">📂</button>
-            <button className="btn btn-ghost btn-icon" onClick={onExport} title="Export">💾</button>
-            <button className="btn btn-ghost btn-icon" onClick={onClear} title="Clear">🗑</button>
-            <div className="divider" />
-            <button className="btn btn-accent" onClick={onRun}>▶ Run</button>
+          <div className="header-right">
+            <button className="btn btn-icon" onClick={onImport} title="Import"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg></button>
+            <button className="btn btn-icon" onClick={onExport} title="Export"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg></button>
+            <button className="btn btn-icon" onClick={onClear} title="Clear"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></button>
+            <div className="sep" />
+            <button className="btn btn-primary" onClick={onRun}>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+              Run
+            </button>
           </div>
         </header>
       );
     }
 
-    // ========== SIDEBAR ==========
-    function Sidebar({ onDragStart }) {
-      const grouped = Object.entries(NODE_TYPES).reduce((acc, [id, node]) => {
-        if (!acc[node.category]) acc[node.category] = [];
-        acc[node.category].push({ id, ...node });
-        return acc;
-      }, {});
+    function Sidebar({ onDrag }) {
+      const cats = { flow: 'Control', ai: 'AI', data: 'Data' };
+      const grouped = Object.entries(NODES).reduce((a, [k, v]) => ((a[v.cat] = a[v.cat] || []).push({ id: k, ...v }), a), {});
 
       return (
         <aside className="sidebar">
-          <div className="sidebar-header">
-            <span className="sidebar-title">Nodes</span>
-          </div>
-          <div className="node-list">
-            {Object.entries(grouped).map(([cat, nodes]) => (
-              <div key={cat} className="node-category">
-                <div className="node-category-title">{CATEGORIES[cat]}</div>
-                {nodes.map(node => (
-                  <div key={node.id} className="node-item" style={{ '--node-color': node.color }}
-                    draggable onDragStart={e => onDragStart(e, node.id)}>
-                    <div className="node-icon">{node.icon}</div>
-                    <div className="node-meta">
-                      <div className="node-name">{node.label}</div>
-                      <div className="node-desc">{node.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+          {Object.entries(grouped).map(([cat, items]) => (
+            <div key={cat} className="sidebar-section">
+              <div className="sidebar-title">{cats[cat]}</div>
+              {items.map(n => (
+                <div key={n.id} className="node-item" draggable onDragStart={e => onDrag(e, n.id)}>
+                  <div className="node-dot" style={{ background: n.color }} />
+                  <span className="node-text">{n.label}</span>
+                </div>
+              ))}
+            </div>
+          ))}
         </aside>
       );
     }
 
-    // ========== CANVAS ==========
-    function Canvas({ nodes, setNodes, connections, setConnections, selectedNode, setSelectedNode }) {
-      const canvasRef = useRef(null);
+    function Canvas({ nodes, setNodes, edges, setEdges, selected, setSelected }) {
+      const ref = useRef();
       const nodeRefs = useRef({});
 
       const [zoom, setZoom] = useState(1);
-      const [pan, setPan] = useState({ x: 400, y: 200 });
-      const [isPanning, setIsPanning] = useState(false);
+      const [pan, setPan] = useState({ x: 300, y: 200 });
+      const [panning, setPanning] = useState(false);
       const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
-      const [draggingNode, setDraggingNode] = useState(null);
-      const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+      const [dragging, setDragging] = useState(null);
+      const [dragOff, setDragOff] = useState({ x: 0, y: 0 });
 
-      const [connectingFrom, setConnectingFrom] = useState(null);
-      const [tempLine, setTempLine] = useState(null);
+      const [connecting, setConnecting] = useState(null);
+      const [tempEdge, setTempEdge] = useState(null);
 
-      // Zoom with wheel
       useEffect(() => {
-        const el = canvasRef.current;
-        const handleWheel = e => {
-          e.preventDefault();
-          const delta = e.deltaY > 0 ? -0.08 : 0.08;
-          setZoom(z => Math.min(2, Math.max(0.25, z + delta)));
-        };
-        el?.addEventListener('wheel', handleWheel, { passive: false });
-        return () => el?.removeEventListener('wheel', handleWheel);
+        const el = ref.current;
+        const wheel = e => { e.preventDefault(); setZoom(z => Math.max(0.25, Math.min(2, z + (e.deltaY > 0 ? -0.1 : 0.1)))); };
+        el?.addEventListener('wheel', wheel, { passive: false });
+        return () => el?.removeEventListener('wheel', wheel);
       }, []);
 
-      const screenToCanvas = (clientX, clientY) => {
-        const rect = canvasRef.current.getBoundingClientRect();
-        return {
-          x: (clientX - rect.left - pan.x) / zoom,
-          y: (clientY - rect.top - pan.y) / zoom
-        };
+      const toCanvas = (cx, cy) => {
+        const r = ref.current.getBoundingClientRect();
+        return { x: (cx - r.left - pan.x) / zoom, y: (cy - r.top - pan.y) / zoom };
       };
 
-      const getNodeCenter = (nodeId, handle) => {
-        const node = nodes.find(n => n.id === nodeId);
-        if (!node) return { x: 0, y: 0 };
-        const el = nodeRefs.current[nodeId];
-        const w = el?.offsetWidth || 200;
-        const h = el?.offsetHeight || 80;
-        return { x: node.x + (handle === 'out' ? w : 0), y: node.y + h / 2 };
+      const nodePos = (id, side) => {
+        const n = nodes.find(x => x.id === id);
+        if (!n) return { x: 0, y: 0 };
+        const el = nodeRefs.current[id];
+        const w = el?.offsetWidth || 180, h = el?.offsetHeight || 60;
+        return { x: n.x + (side === 'out' ? w : 0), y: n.y + h / 2 };
       };
 
-      const handleDrop = e => {
+      const onDrop = e => {
         e.preventDefault();
         const type = e.dataTransfer.getData('nodeType');
         if (!type) return;
-        const pos = screenToCanvas(e.clientX, e.clientY);
-        setNodes(prev => [...prev, {
-          id: `node-${Date.now()}`,
-          type,
-          x: pos.x - 100,
-          y: pos.y - 40,
-          data: {
-            label: NODE_TYPES[type].label,
-            provider: type === 'llm' ? 'groq' : null,
-            model: type === 'llm' ? 'llama-3.3-70b-versatile' : null,
-            prompt: '', config: {}
-          }
-        }]);
+        const p = toCanvas(e.clientX, e.clientY);
+        setNodes(prev => [...prev, { id: `n${Date.now()}`, type, x: p.x - 90, y: p.y - 30, data: { label: NODES[type].label, provider: type === 'llm' ? 'groq' : null, model: type === 'llm' ? 'llama-3.3-70b-versatile' : null, prompt: '', config: {} } }]);
       };
 
-      const handleCanvasMouseDown = e => {
-        if (e.button === 1 || e.button === 2) { // Middle or Right click
+      const onCanvasDown = e => {
+        if (e.button === 1 || e.button === 2) {
           e.preventDefault();
-          setIsPanning(true);
+          setPanning(true);
           setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
         }
       };
 
-      const handleContextMenu = e => e.preventDefault();
-
-      const handleNodeMouseDown = (e, node) => {
-        if (e.target.closest('.node-handle') || ['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
-        e.preventDefault();
+      const onNodeDown = (e, node) => {
+        if (e.target.closest('.handle') || ['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
         e.stopPropagation();
-        setSelectedNode(node.id);
-        setDraggingNode(node.id);
-        const pos = screenToCanvas(e.clientX, e.clientY);
-        setDragOffset({ x: pos.x - node.x, y: pos.y - node.y });
+        setSelected(node.id);
+        setDragging(node.id);
+        const p = toCanvas(e.clientX, e.clientY);
+        setDragOff({ x: p.x - node.x, y: p.y - node.y });
       };
 
-      const handleMouseMove = e => {
-        if (isPanning) {
-          setPan({ x: e.clientX - panStart.x, y: e.clientY - panStart.y });
-          return;
+      const onMove = e => {
+        if (panning) return setPan({ x: e.clientX - panStart.x, y: e.clientY - panStart.y });
+        if (dragging) {
+          const p = toCanvas(e.clientX, e.clientY);
+          setNodes(prev => prev.map(n => n.id === dragging ? { ...n, x: p.x - dragOff.x, y: p.y - dragOff.y } : n));
         }
-
-        if (draggingNode) {
-          const pos = screenToCanvas(e.clientX, e.clientY);
-          setNodes(prev => prev.map(n => n.id === draggingNode ? { ...n, x: pos.x - dragOffset.x, y: pos.y - dragOffset.y } : n));
-        }
-
-        if (connectingFrom) {
-          const start = getNodeCenter(connectingFrom, 'out');
-          const mouse = screenToCanvas(e.clientX, e.clientY);
-          setTempLine({ ...start, x2: mouse.x, y2: mouse.y });
+        if (connecting) {
+          const s = nodePos(connecting, 'out');
+          const m = toCanvas(e.clientX, e.clientY);
+          setTempEdge({ x1: s.x, y1: s.y, x2: m.x, y2: m.y });
         }
       };
 
-      const handleMouseUp = () => {
-        setIsPanning(false);
-        setDraggingNode(null);
-        setConnectingFrom(null);
-        setTempLine(null);
-      };
+      const onUp = () => { setPanning(false); setDragging(null); setConnecting(null); setTempEdge(null); };
 
-      const handleOutputMouseDown = (e, nodeId) => {
+      const outDown = (e, id) => { e.stopPropagation(); setConnecting(id); };
+      const inUp = (e, id) => {
         e.stopPropagation();
-        setConnectingFrom(nodeId);
-      };
-
-      const handleInputMouseUp = (e, targetId) => {
-        e.stopPropagation();
-        if (connectingFrom && connectingFrom !== targetId) {
-          const exists = connections.some(c => c.from === connectingFrom && c.to === targetId);
-          if (!exists) setConnections(prev => [...prev, { id: `conn-${Date.now()}`, from: connectingFrom, to: targetId }]);
+        if (connecting && connecting !== id && !edges.some(c => c.from === connecting && c.to === id)) {
+          setEdges(prev => [...prev, { id: `e${Date.now()}`, from: connecting, to: id }]);
         }
-        setConnectingFrom(null);
-        setTempLine(null);
+        setConnecting(null); setTempEdge(null);
       };
 
-      const deleteConnection = id => setConnections(prev => prev.filter(c => c.id !== id));
+      const delEdge = id => setEdges(prev => prev.filter(c => c.id !== id));
 
-      const updateNodeData = (id, key, val) => {
-        setNodes(prev => prev.map(n => n.id === id ? { ...n, data: { ...n.data, [key]: val } } : n));
-      };
+      const upd = (id, k, v) => setNodes(prev => prev.map(n => n.id === id ? { ...n, data: { ...n.data, [k]: v } } : n));
 
       return (
-        <div className={`canvas ${isPanning ? 'panning' : ''}`} ref={canvasRef}
-          onDrop={handleDrop} onDragOver={e => e.preventDefault()}
-          onMouseDown={handleCanvasMouseDown} onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}
-          onContextMenu={handleContextMenu}
-          onClick={() => setSelectedNode(null)}>
+        <div className={`canvas ${panning ? 'panning' : ''}`} ref={ref}
+          onDrop={onDrop} onDragOver={e => e.preventDefault()}
+          onMouseDown={onCanvasDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
+          onContextMenu={e => e.preventDefault()} onClick={() => setSelected(null)}>
 
-          <div className="canvas-viewport" style={{ transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})` }}>
-            <div className="canvas-grid" />
-            <div className="canvas-origin" />
+          <div className="viewport" style={{ transform: `translate(${pan.x}px,${pan.y}px) scale(${zoom})` }}>
+            <div className="grid" />
 
-            <svg className="connections-layer" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-              {connections.map(c => {
-                const s = getNodeCenter(c.from, 'out');
-                const e = getNodeCenter(c.to, 'in');
-                const mx = (s.x + e.x) / 2;
-                return (
-                  <path key={c.id} className="connection" style={{ pointerEvents: 'stroke', cursor: 'pointer' }}
-                    d={`M${s.x},${s.y} C${mx},${s.y} ${mx},${e.y} ${e.x},${e.y}`}
-                    onClick={() => deleteConnection(c.id)} />
-                );
+            <svg className="connections" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+              {edges.map(c => {
+                const s = nodePos(c.from, 'out'), t = nodePos(c.to, 'in');
+                const mx = (s.x + t.x) / 2;
+                return <path key={c.id} className="edge" style={{ pointerEvents: 'stroke', cursor: 'pointer' }} d={`M${s.x},${s.y}C${mx},${s.y} ${mx},${t.y} ${t.x},${t.y}`} onClick={() => delEdge(c.id)} />;
               })}
-              {tempLine && <path className="connection connection-temp" d={`M${tempLine.x},${tempLine.y} L${tempLine.x2},${tempLine.y2}`} />}
+              {tempEdge && <path className="edge edge-temp" d={`M${tempEdge.x1},${tempEdge.y1}L${tempEdge.x2},${tempEdge.y2}`} />}
             </svg>
 
-            <div className="nodes-layer">
-              {nodes.map(node => {
-                const cfg = NODE_TYPES[node.type];
+            <div className="nodes">
+              {nodes.map(n => {
+                const cfg = NODES[n.type];
                 return (
-                  <div key={node.id} ref={el => nodeRefs.current[node.id] = el}
-                    className={`workflow-node animate-in ${selectedNode === node.id ? 'selected' : ''} ${draggingNode === node.id ? 'dragging' : ''}`}
-                    style={{ left: node.x, top: node.y, '--node-color': cfg.color }}
-                    onMouseDown={e => handleNodeMouseDown(e, node)}>
+                  <div key={n.id} ref={el => nodeRefs.current[n.id] = el}
+                    className={`node ${selected === n.id ? 'selected' : ''} ${dragging === n.id ? 'dragging' : ''}`}
+                    style={{ left: n.x, top: n.y, '--node-color': cfg.color }}
+                    onMouseDown={e => onNodeDown(e, n)}>
+                    <div className="node-bar" />
+                    {n.type !== 'trigger' && <div className="handle handle-in" onMouseUp={e => inUp(e, n.id)} />}
+                    <div className="handle handle-out" onMouseDown={e => outDown(e, n.id)} />
 
-                    {node.type !== 'trigger' && <div className="node-handle node-handle-in" onMouseUp={e => handleInputMouseUp(e, node.id)} />}
-                    <div className="node-handle node-handle-out" onMouseDown={e => handleOutputMouseDown(e, node.id)} />
-
-                    <div className="node-header">
-                      <div className="node-header-icon">{cfg.icon}</div>
-                      <span className="node-header-title">{node.data.label}</span>
+                    <div className="node-head">
+                      <div className="node-icon">{cfg.icon}</div>
+                      <span className="node-title">{n.data.label}</span>
                     </div>
 
-                    {node.type === 'llm' && (
-                      <div className="node-content">
-                        <div className="node-field">
-                          <label className="node-field-label">Provider</label>
-                          <select className="node-field-select" value={node.data.provider || 'groq'}
-                            onChange={e => updateNodeData(node.id, 'provider', e.target.value)}>
-                            {Object.keys(LLM_PROVIDERS).map(p => <option key={p} value={p}>{p}</option>)}
+                    {n.type === 'llm' && (
+                      <div className="node-body">
+                        <div className="field">
+                          <label className="field-label">Provider</label>
+                          <select className="field-select" value={n.data.provider || 'groq'} onChange={e => upd(n.id, 'provider', e.target.value)}>
+                            {Object.keys(LLM_MODELS).map(p => <option key={p}>{p}</option>)}
                           </select>
                         </div>
-                        <div className="node-field">
-                          <label className="node-field-label">Model</label>
-                          <select className="node-field-select" value={node.data.model || ''} onChange={e => updateNodeData(node.id, 'model', e.target.value)}>
-                            {(LLM_PROVIDERS[node.data.provider] || []).map(m => <option key={m} value={m}>{m}</option>)}
+                        <div className="field">
+                          <label className="field-label">Model</label>
+                          <select className="field-select" value={n.data.model || ''} onChange={e => upd(n.id, 'model', e.target.value)}>
+                            {(LLM_MODELS[n.data.provider] || []).map(m => <option key={m}>{m}</option>)}
                           </select>
                         </div>
-                        <div className="node-field">
-                          <label className="node-field-label">Prompt</label>
-                          <textarea className="node-field-textarea" value={node.data.prompt || ''} onChange={e => updateNodeData(node.id, 'prompt', e.target.value)} placeholder="Enter your prompt..." />
+                        <div className="field">
+                          <label className="field-label">Prompt</label>
+                          <textarea className="field-textarea" value={n.data.prompt || ''} onChange={e => upd(n.id, 'prompt', e.target.value)} placeholder="Enter prompt..." />
                         </div>
                       </div>
                     )}
 
-                    {node.type === 'http' && (
-                      <div className="node-content">
-                        <div className="node-field">
-                          <label className="node-field-label">Method</label>
-                          <select className="node-field-select" value={node.data.config?.method || 'GET'}
-                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, method: e.target.value })}>
+                    {n.type === 'http' && (
+                      <div className="node-body">
+                        <div className="field">
+                          <label className="field-label">Method</label>
+                          <select className="field-select" value={n.data.config?.method || 'GET'} onChange={e => upd(n.id, 'config', { ...n.data.config, method: e.target.value })}>
                             <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
                           </select>
                         </div>
-                        <div className="node-field">
-                          <label className="node-field-label">URL</label>
-                          <input className="node-field-input" value={node.data.config?.url || ''} placeholder="https://api.example.com"
-                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, url: e.target.value })} />
+                        <div className="field">
+                          <label className="field-label">URL</label>
+                          <input className="field-input" value={n.data.config?.url || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, url: e.target.value })} placeholder="https://..." />
                         </div>
                       </div>
                     )}
 
-                    {node.type === 'condition' && (
-                      <div className="node-content">
-                        <div className="node-field">
-                          <label className="node-field-label">Expression</label>
-                          <input className="node-field-input node-field-code" value={node.data.config?.condition || ''} placeholder="value > 10"
-                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, condition: e.target.value })} />
+                    {n.type === 'condition' && (
+                      <div className="node-body">
+                        <div className="field">
+                          <label className="field-label">Expression</label>
+                          <input className="field-input field-code" value={n.data.config?.condition || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, condition: e.target.value })} placeholder="value > 10" />
                         </div>
                       </div>
                     )}
 
-                    {node.type === 'code' && (
-                      <div className="node-content">
-                        <div className="node-field">
-                          <label className="node-field-label">Script</label>
-                          <textarea className="node-field-textarea node-field-code" value={node.data.config?.code || ''} placeholder="return data"
-                            onChange={e => updateNodeData(node.id, 'config', { ...node.data.config, code: e.target.value })} />
+                    {n.type === 'code' && (
+                      <div className="node-body">
+                        <div className="field">
+                          <label className="field-label">Script</label>
+                          <textarea className="field-textarea field-code" value={n.data.config?.code || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, code: e.target.value })} placeholder="return data" />
                         </div>
                       </div>
                     )}
@@ -1125,68 +926,62 @@
           </div>
 
           {nodes.length === 0 && (
-            <div className="canvas-empty">
-              <div className="canvas-empty-icon">🔱</div>
-              <div className="canvas-empty-title">Build your workflow</div>
-              <div className="canvas-empty-desc">Drag nodes from the sidebar to get started</div>
+            <div className="empty">
+              <div className="empty-title">Start building</div>
+              <div className="empty-desc">Drag nodes from the sidebar</div>
             </div>
           )}
 
-          <div className="canvas-controls">
-            <button className="zoom-btn" onClick={() => setZoom(z => Math.min(2, z + 0.25))}>+</button>
-            <div className="zoom-display">{Math.round(zoom * 100)}%</div>
-            <button className="zoom-btn" onClick={() => setZoom(z => Math.max(0.25, z - 0.25))}>−</button>
-            <button className="zoom-btn" onClick={() => { setZoom(1); setPan({ x: 400, y: 200 }); }}>⌂</button>
+          <div className="controls">
+            <button className="ctrl-btn" onClick={() => setZoom(z => Math.min(2, z + 0.25))}>+</button>
+            <span className="ctrl-label">{Math.round(zoom * 100)}%</span>
+            <button className="ctrl-btn" onClick={() => setZoom(z => Math.max(0.25, z - 0.25))}>−</button>
+            <button className="ctrl-btn" onClick={() => { setZoom(1); setPan({ x: 300, y: 200 }); }}>○</button>
           </div>
         </div>
       );
     }
 
-    // ========== GUARDIAN ==========
-    function Guardian({ nodes, connections }) {
-      const errors = [];
-      const warnings = [];
+    function Panel({ nodes, edges }) {
+      const errs = [], warns = [];
 
-      if (nodes.length === 0) {
-        errors.push('No nodes in workflow');
-      } else {
-        if (!nodes.some(n => n.type === 'trigger')) errors.push('Missing trigger node');
+      if (!nodes.length) errs.push('No nodes');
+      else {
+        if (!nodes.some(n => n.type === 'trigger')) errs.push('Missing trigger node');
         nodes.forEach(n => {
-          if (n.type === 'llm' && !n.data.prompt) warnings.push(`"${n.data.label}" needs a prompt`);
-          if (n.type === 'http' && !n.data.config?.url) warnings.push(`"${n.data.label}" needs a URL`);
-          if (n.type !== 'trigger' && !connections.some(c => c.to === n.id)) warnings.push(`"${n.data.label}" is disconnected`);
+          if (n.type === 'llm' && !n.data.prompt) warns.push(`${n.data.label} needs prompt`);
+          if (n.type === 'http' && !n.data.config?.url) warns.push(`${n.data.label} needs URL`);
+          if (n.type !== 'trigger' && !edges.some(e => e.to === n.id)) warns.push(`${n.data.label} disconnected`);
         });
       }
 
-      const isValid = errors.length === 0;
+      const ok = !errs.length;
 
       return (
-        <aside className="guardian">
-          <div className="guardian-header">
-            <div className="guardian-title">
-              <span>🛡️</span>
-              <span>Guardian</span>
+        <aside className="panel">
+          <div className="panel-head">
+            <div className="panel-title">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              Guardian
             </div>
-            <div className="guardian-status">
-              <div className={`status-dot ${isValid ? '' : 'error'}`} />
-              <span>{isValid ? 'Valid' : 'Issues'}</span>
+            <div className="status">
+              <div className={`status-dot ${ok ? 'ok' : 'err'}`} />
+              <span>{ok ? 'Valid' : 'Issues'}</span>
             </div>
           </div>
-          <div className="guardian-body">
-            <div className="guardian-section">
-              <div className="guardian-section-title">Validation</div>
-              {errors.map((e, i) => <div key={i} className="alert error animate-in"><span className="alert-icon">✕</span><span className="alert-text">{e}</span></div>)}
-              {warnings.map((w, i) => <div key={i} className="alert animate-in"><span className="alert-icon">!</span><span className="alert-text">{w}</span></div>)}
-              {isValid && warnings.length === 0 && nodes.length > 0 && (
-                <div className="alert success animate-in"><span className="alert-icon">✓</span><span className="alert-text">Workflow is ready to run</span></div>
-              )}
-              {nodes.length === 0 && <div className="guardian-empty"><div className="guardian-empty-icon">📋</div><div className="guardian-empty-text">Add nodes to validate</div></div>}
+          <div className="panel-body">
+            <div className="panel-section">
+              <div className="panel-label">Validation</div>
+              {errs.map((e, i) => <div key={i} className="msg err"><span className="msg-icon">×</span><span className="msg-text">{e}</span></div>)}
+              {warns.map((w, i) => <div key={i} className="msg"><span className="msg-icon">!</span><span className="msg-text">{w}</span></div>)}
+              {ok && !warns.length && nodes.length > 0 && <div className="msg ok"><span className="msg-icon">✓</span><span className="msg-text">Ready to run</span></div>}
+              {!nodes.length && <div className="panel-empty">Add nodes to validate</div>}
             </div>
-            <div className="guardian-section">
-              <div className="guardian-section-title">Statistics</div>
-              <div className="stats-grid">
-                <div className="stat-card"><div className="stat-value">{nodes.length}</div><div className="stat-label">Nodes</div></div>
-                <div className="stat-card"><div className="stat-value">{connections.length}</div><div className="stat-label">Edges</div></div>
+            <div className="panel-section">
+              <div className="panel-label">Stats</div>
+              <div className="stats">
+                <div className="stat"><div className="stat-num">{nodes.length}</div><div className="stat-lbl">Nodes</div></div>
+                <div className="stat"><div className="stat-num">{edges.length}</div><div className="stat-lbl">Edges</div></div>
               </div>
             </div>
           </div>
@@ -1194,45 +989,27 @@
       );
     }
 
-    // ========== APP ==========
     function App() {
-      const [name, setName] = useState('Untitled workflow');
+      const [name, setName] = useState('Untitled');
       const [nodes, setNodes] = useState([]);
-      const [connections, setConnections] = useState([]);
+      const [edges, setEdges] = useState([]);
       const [selected, setSelected] = useState(null);
 
-      const handleDragStart = (e, type) => {
-        e.dataTransfer.setData('nodeType', type);
-        e.dataTransfer.effectAllowed = 'move';
-      };
+      const onDrag = (e, type) => { e.dataTransfer.setData('nodeType', type); e.dataTransfer.effectAllowed = 'move'; };
 
       return (
         <div className="app">
-          <TopBar name={name} setName={setName}
-            onClear={() => { setNodes([]); setConnections([]); }}
-            onRun={() => alert(nodes.length ? '🚀 Workflow ready! Connect to backend to execute.' : 'Add nodes first!')}
-            onExport={() => {
-              const blob = new Blob([JSON.stringify({ name, nodes, connections }, null, 2)], { type: 'application/json' });
-              const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${name.replace(/\s+/g, '_')}.json`; a.click();
-            }}
-            onImport={() => {
-              const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
-              input.onchange = e => {
-                const f = e.target.files[0];
-                if (f) {
-                  const r = new FileReader();
-                  r.onload = ev => { try { const d = JSON.parse(ev.target.result); setName(d.name || 'Imported'); setNodes(d.nodes || []); setConnections(d.connections || []); } catch { } };
-                  r.readAsText(f);
-                }
-              };
-              input.click();
-            }}
+          <Header name={name} setName={setName}
+            onClear={() => { setNodes([]); setEdges([]); }}
+            onRun={() => alert(nodes.length ? 'Workflow ready! Connect backend to execute.' : 'Add nodes first')}
+            onExport={() => { const b = new Blob([JSON.stringify({ name, nodes, edges }, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${name}.json`; a.click(); }}
+            onImport={() => { const i = document.createElement('input'); i.type = 'file'; i.accept = '.json'; i.onchange = e => { const r = new FileReader(); r.onload = ev => { try { const d = JSON.parse(ev.target.result); setName(d.name); setNodes(d.nodes || []); setEdges(d.edges || d.connections || []); } catch { } }; r.readAsText(e.target.files[0]); }; i.click(); }}
           />
-          <main className="main">
-            <Sidebar onDragStart={handleDragStart} />
-            <Canvas nodes={nodes} setNodes={setNodes} connections={connections} setConnections={setConnections} selectedNode={selected} setSelectedNode={setSelected} />
-            <Guardian nodes={nodes} connections={connections} />
-          </main>
+          <div className="layout">
+            <Sidebar onDrag={onDrag} />
+            <Canvas nodes={nodes} setNodes={setNodes} edges={edges} setEdges={setEdges} selected={selected} setSelected={setSelected} />
+            <Panel nodes={nodes} edges={edges} />
+          </div>
         </div>
       );
     }
