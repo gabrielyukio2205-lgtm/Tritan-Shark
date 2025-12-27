@@ -769,6 +769,8 @@
             }))
           };
 
+          console.log('Sending workflow:', JSON.stringify(workflow, null, 2));
+
           const response = await fetch(`${backendUrl}/api/execute/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
