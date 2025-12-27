@@ -28,9 +28,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: frontend
 
       - name: Build
         run: npm run build
+        working-directory: frontend
         env:
           VITE_API_URL: ${{ secrets.API_URL }}
 
@@ -41,7 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: tritan-pages
-          path: dist
+          path: frontend/dist
 
   deploy:
     environment:
