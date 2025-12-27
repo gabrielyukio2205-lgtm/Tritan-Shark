@@ -494,6 +494,130 @@
       font-size: 14px;
       color: #555;
     }
+
+    /* Auto-Planner Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .modal {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      width: 500px;
+      max-width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #666;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #888;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .modal-textarea {
+      width: 100%;
+      min-height: 120px;
+      background: #252525;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    .modal-textarea:focus {
+      outline: none;
+      border-color: #7c3aed;
+    }
+
+    .modal-textarea::placeholder {
+      color: #555;
+    }
+
+    .modal-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #2a2a2a;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .modal-hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 12px;
+    }
+
+    .generating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px;
+      background: #252525;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #333;
+      border-top-color: #7c3aed;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
@@ -544,6 +668,65 @@
 
       const canvasRef = useRef(null);
       const nodesRef = useRef({});
+
+      // Auto-Planner state
+      const [showPlanner, setShowPlanner] = useState(false);
+      const [plannerTask, setPlannerTask] = useState('');
+      const [isGenerating, setIsGenerating] = useState(false);
+      const [backendUrl, setBackendUrl] = useState(localStorage.getItem('tritan_backend_url') || 'https://madras1-tritan-api.hf.space');
+
+      // Generate workflow from task description (calls backend API)
+      const generateWorkflow = async () => {
+        if (!plannerTask.trim()) return;
+
+        localStorage.setItem('tritan_backend_url', backendUrl);
+        setIsGenerating(true);
+
+        try {
+          const response = await fetch(`${backendUrl}/api/planner/generate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ task: plannerTask })
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'API error');
+          }
+
+          const workflow = await response.json();
+
+          // Set the workflow
+          setWorkflowName(workflow.name || 'Generated Workflow');
+          setNodes(workflow.nodes.map((n, i) => ({
+            ...n,
+            id: n.id || `node_${Date.now()}_${i}`,
+            data: {
+              provider: 'groq', // Default values if not provided by backend
+              model: 'llama-3.3-70b-versatile',
+              prompt: '',
+              url: '',
+              method: 'GET',
+              code: '',
+              condition: '',
+              ...n.data // Override with data from backend
+            }
+          })));
+          setConnections(workflow.connections.map((c, i) => ({
+            id: `conn_${Date.now()}_${i}`,
+            from: c.from,
+            to: c.to
+          })));
+
+          setShowPlanner(false);
+          setPlannerTask('');
+
+        } catch (err) {
+          alert('Error generating workflow: ' + err.message);
+        } finally {
+          setIsGenerating(false);
+        }
+      };
 
       // Drag from sidebar
       const handleDragStart = (e, type) => {
@@ -760,6 +943,7 @@
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               <button className="btn btn-secondary" onClick={() => { setNodes([]); setConnections([]); }}>Clear</button>
+              <button className="btn btn-secondary" onClick={() => setShowPlanner(true)} style={{ background: '#7c3aed22', borderColor: '#7c3aed' }}>✨ AI Planner</button>
               <button className="btn btn-primary" onClick={() => alert('Run workflow!')}>▶ Run</button>
             </div>
           </header>
@@ -1012,6 +1196,58 @@
               </div>
             </aside>
           </div>
+
+          {/* Auto-Planner Modal */}
+          {showPlanner && (
+            <div className="modal-overlay" onClick={() => !isGenerating && setShowPlanner(false)}>
+              <div className="modal" onClick={e => e.stopPropagation()}>
+                <div className="modal-header">
+                  <div className="modal-title">
+                    <span>✨</span>
+                    AI Workflow Planner
+                  </div>
+                  <button className="modal-close" onClick={() => !isGenerating && setShowPlanner(false)}>×</button>
+                </div>
+                <div className="modal-body">
+                  <label className="modal-label">Backend URL</label>
+                  <input
+                    className="modal-textarea"
+                    style={{ minHeight: 'auto', marginBottom: 16 }}
+                    type="text"
+                    value={backendUrl}
+                    onChange={e => setBackendUrl(e.target.value)}
+                    placeholder="http://localhost:8000"
+                  />
+
+                  <label className="modal-label">Describe your task</label>
+                  <textarea
+                    className="modal-textarea"
+                    value={plannerTask}
+                    onChange={e => setPlannerTask(e.target.value)}
+                    placeholder="Example: Monitor Bitcoin price every 5 minutes and send me an alert if it drops more than 5%"
+                    disabled={isGenerating}
+                  />
+
+                  {isGenerating && (
+                    <div className="generating">
+                      <div className="spinner" />
+                      <span>Generating workflow...</span>
+                    </div>
+                  )}
+
+                  <div className="modal-hint">
+                    Connects to the Tritan backend API. Make sure the backend is running with GROQ_API_KEY configured.
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button className="btn btn-secondary" onClick={() => setShowPlanner(false)} disabled={isGenerating}>Cancel</button>
+                  <button className="btn btn-primary" onClick={generateWorkflow} disabled={isGenerating || !plannerTask.trim()}>
+                    {isGenerating ? 'Generating...' : '✨ Generate Workflow'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
