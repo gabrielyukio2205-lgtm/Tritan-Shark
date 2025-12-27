@@ -785,15 +785,7 @@
           const result = await response.json();
           setExecutionResult(result);
           console.log('Execution result:', result);
-
-          if (result.status === 'completed') {
-            alert(`✅ Workflow completed!\nDuration: ${Math.round(result.total_duration_ms)}ms\nOutput: ${JSON.stringify(result.final_output, null, 2).slice(0, 200)}`);
-          } else {
-            // Find the first failed node
-            const failedNode = result.node_results?.find(n => n.status === 'failed');
-            const errorMsg = failedNode?.error || result.error || 'Unknown error';
-            alert(`❌ Workflow failed!\nStatus: ${result.status}\nError: ${errorMsg}`);
-          }
+          setShowResult(true);
 
         } catch (err) {
           console.error('Execution error:', err);
@@ -802,6 +794,8 @@
           setIsRunning(false);
         }
       };
+
+      const [showResult, setShowResult] = useState(false);
 
       // Drag from sidebar
       const handleDragStart = (e, type) => {
@@ -1319,6 +1313,85 @@
                   <button className="btn btn-primary" onClick={generateWorkflow} disabled={isGenerating || !plannerTask.trim()}>
                     {isGenerating ? 'Generating...' : '✨ Generate Workflow'}
                   </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Execution Result Modal */}
+          {showResult && executionResult && (
+            <div className="modal-overlay" onClick={() => setShowResult(false)}>
+              <div className="modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 700 }}>
+                <div className="modal-header">
+                  <div className="modal-title">
+                    <span>{executionResult.status === 'completed' ? '✅' : '❌'}</span>
+                    Execution {executionResult.status === 'completed' ? 'Completed' : 'Failed'}
+                  </div>
+                  <button className="modal-close" onClick={() => setShowResult(false)}>×</button>
+                </div>
+                <div className="modal-body" style={{ maxHeight: 500, overflow: 'auto' }}>
+                  <div style={{ marginBottom: 16, padding: 12, background: '#1e1e2e', borderRadius: 8 }}>
+                    <div style={{ color: '#94a3b8', fontSize: 12 }}>Duration</div>
+                    <div style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
+                      {Math.round(executionResult.total_duration_ms)}ms
+                    </div>
+                  </div>
+
+                  <label className="modal-label">Node Results</label>
+                  {executionResult.node_results?.map((node, i) => (
+                    <div key={i} style={{
+                      marginBottom: 12,
+                      padding: 12,
+                      background: node.status === 'completed' ? '#22c55e22' : '#ef444422',
+                      borderRadius: 8,
+                      borderLeft: `3px solid ${node.status === 'completed' ? '#22c55e' : '#ef4444'}`
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <strong style={{ color: '#fff' }}>{node.node_id}</strong>
+                        <span style={{ color: node.status === 'completed' ? '#22c55e' : '#ef4444' }}>
+                          {node.status}
+                        </span>
+                      </div>
+                      {node.error && (
+                        <div style={{ color: '#ef4444', fontSize: 12 }}>Error: {node.error}</div>
+                      )}
+                      {node.output && (
+                        <pre style={{
+                          background: '#0d0d14',
+                          padding: 8,
+                          borderRadius: 4,
+                          fontSize: 11,
+                          overflow: 'auto',
+                          maxHeight: 150,
+                          color: '#94a3b8'
+                        }}>
+                          {JSON.stringify(node.output, null, 2)}
+                        </pre>
+                      )}
+                    </div>
+                  ))}
+
+                  {executionResult.final_output && (
+                    <>
+                      <label className="modal-label" style={{ marginTop: 16 }}>Final Output</label>
+                      <pre style={{
+                        background: '#0d0d14',
+                        padding: 12,
+                        borderRadius: 8,
+                        fontSize: 12,
+                        overflow: 'auto',
+                        maxHeight: 200,
+                        color: '#fff'
+                      }}>
+                        {typeof executionResult.final_output === 'object'
+                          ? JSON.stringify(executionResult.final_output, null, 2)
+                          : executionResult.final_output}
+                      </pre>
+                    </>
+                  )}
+                </div>
+                <div className="modal-footer">
+                  <button className="btn btn-primary" onClick={() => setShowResult(false)}>Close</button>
                 </div>
               </div>
             </div>
