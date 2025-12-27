@@ -155,6 +155,35 @@ function CustomNode({ id, data, selected }) {
                 </div>
             )}
 
+            {/* Node Body - Transform specific */}
+            {data.nodeType === 'transform' && (
+                <div className="node-body">
+                    <div className="node-field">
+                        <label>Transform</label>
+                        <select
+                            value={data.config?.transform || 'passthrough'}
+                            onChange={(e) => handleConfigChange('config', { ...data.config, transform: e.target.value })}
+                            className="node-select"
+                        >
+                            <option value="passthrough">Passthrough</option>
+                            <option value="json_parse">JSON Parse</option>
+                            <option value="uppercase">Uppercase</option>
+                            <option value="lowercase">Lowercase</option>
+                        </select>
+                    </div>
+                    <div className="node-field">
+                        <label>Input</label>
+                        <input
+                            type="text"
+                            value={data.config?.input || ''}
+                            onChange={(e) => handleConfigChange('config', { ...data.config, input: e.target.value })}
+                            className="node-input"
+                            placeholder="${node-id}"
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Output Handle */}
             <Handle
                 type="source"
