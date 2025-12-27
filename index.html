@@ -782,9 +782,19 @@
 
           const result = await response.json();
           setExecutionResult(result);
-          alert(`✅ Workflow completed!\nStatus: ${result.status}\nDuration: ${Math.round(result.total_duration_ms)}ms`);
+          console.log('Execution result:', result);
+
+          if (result.status === 'completed') {
+            alert(`✅ Workflow completed!\nDuration: ${Math.round(result.total_duration_ms)}ms\nOutput: ${JSON.stringify(result.final_output, null, 2).slice(0, 200)}`);
+          } else {
+            // Find the first failed node
+            const failedNode = result.node_results?.find(n => n.status === 'failed');
+            const errorMsg = failedNode?.error || result.error || 'Unknown error';
+            alert(`❌ Workflow failed!\nStatus: ${result.status}\nError: ${errorMsg}`);
+          }
 
         } catch (err) {
+          console.error('Execution error:', err);
           alert('❌ Execution error: ' + err.message);
         } finally {
           setIsRunning(false);
