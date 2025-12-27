@@ -640,10 +640,10 @@
 
     const PROVIDERS = ['groq', 'openrouter', 'gemini', 'cerebras'];
     const MODELS = {
-      groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768'],
-      openrouter: ['anthropic/claude-3.5-sonnet', 'openai/gpt-4o'],
-      gemini: ['gemini-2.0-flash-exp', 'gemini-1.5-pro'],
-      cerebras: ['llama3.1-8b', 'llama3.1-70b'],
+      groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'openai/gpt-oss-120b', 'qwen/qwen3-32b'],
+      openrouter: ['anthropic/claude-sonnet-4', 'openai/gpt-4.1', 'google/gemini-2.5-flash', 'meta-llama/llama-4-maverick'],
+      gemini: ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash'],
+      cerebras: ['llama-3.3-70b', 'llama3.1-8b', 'qwen-3-32b'],
     };
 
     function App() {
@@ -725,6 +725,69 @@
           alert('Error generating workflow: ' + err.message);
         } finally {
           setIsGenerating(false);
+        }
+      };
+
+      // Workflow execution state
+      const [isRunning, setIsRunning] = useState(false);
+      const [executionResult, setExecutionResult] = useState(null);
+
+      // Run workflow
+      const runWorkflow = async () => {
+        if (nodes.length === 0) {
+          alert('Add some nodes first!');
+          return;
+        }
+
+        const hasTrigger = nodes.some(n => n.type === 'trigger');
+        if (!hasTrigger) {
+          alert('Workflow needs a Trigger node to start!');
+          return;
+        }
+
+        setIsRunning(true);
+        setExecutionResult(null);
+
+        try {
+          // Convert frontend format to backend format
+          const workflow = {
+            id: `wf_${Date.now()}`,
+            name: workflowName,
+            nodes: nodes.map(n => ({
+              id: n.id,
+              type: n.type,
+              position: { x: n.x, y: n.y },
+              data: {
+                label: NODE_TYPES[n.type]?.name || n.type,
+                ...n.data
+              }
+            })),
+            edges: connections.map(c => ({
+              id: c.id,
+              source: c.from,
+              target: c.to
+            }))
+          };
+
+          const response = await fetch(`${backendUrl}/api/execute/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(workflow)
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Execution failed');
+          }
+
+          const result = await response.json();
+          setExecutionResult(result);
+          alert(`✅ Workflow completed!\nStatus: ${result.status}\nDuration: ${Math.round(result.total_duration_ms)}ms`);
+
+        } catch (err) {
+          alert('❌ Execution error: ' + err.message);
+        } finally {
+          setIsRunning(false);
         }
       };
 
@@ -944,7 +1007,7 @@
             <div style={{ display: 'flex', gap: 8 }}>
               <button className="btn btn-secondary" onClick={() => { setNodes([]); setConnections([]); }}>Clear</button>
               <button className="btn btn-secondary" onClick={() => setShowPlanner(true)} style={{ background: '#7c3aed22', borderColor: '#7c3aed' }}>✨ AI Planner</button>
-              <button className="btn btn-primary" onClick={() => alert('Run workflow!')}>▶ Run</button>
+              <button className="btn btn-primary" onClick={runWorkflow} disabled={isRunning}>{isRunning ? '⏳ Running...' : '▶ Run'}</button>
             </div>
           </header>
 
