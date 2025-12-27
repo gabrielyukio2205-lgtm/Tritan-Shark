@@ -1,0 +1,129 @@
+.node-palette {
+    width: 240px;
+    min-width: 240px;
+    height: 100%;
+    background: var(--glass-bg);
+    border-right: 1px solid var(--border-color);
+    backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.palette-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.palette-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.palette-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.palette-nodes {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.palette-node {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: grab;
+    transition: all var(--transition-fast);
+    border-left: 3px solid var(--node-color);
+}
+
+.palette-node:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-sm);
+}
+
+.palette-node:active {
+    cursor: grabbing;
+}
+
+.palette-node-icon {
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+}
+
+.palette-node-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.palette-node-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.palette-node-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.palette-footer {
+    padding: var(--space-3);
+    border-top: 1px solid var(--border-color);
+}
+
+.palette-tip {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.palette-tip strong {
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .node-palette {
+        width: 60px;
+        min-width: 60px;
+    }
+
+    .palette-header h3,
+    .palette-hint,
+    .palette-node-info,
+    .palette-footer {
+        display: none;
+    }
+
+    .palette-node {
+        justify-content: center;
+        border-left-width: 0;
+        border-bottom: 3px solid var(--node-color);
+    }
+
+    .palette-node-icon {
+        margin: 0;
+    }
+}
