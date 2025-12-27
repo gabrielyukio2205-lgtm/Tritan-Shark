@@ -4,40 +4,29 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23a855f7' d='M16 2L4 14l3 3 9-9 9 9 3-3L16 2zm0 10l-6 6v12h4v-8h4v8h4V18l-6-6z'/%3E%3C/svg%3E" />
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%237c3aed' d='M16 2L4 14l3 3 9-9 9 9 3-3L16 2zm0 10l-6 6v12h4v-8h4v8h4V18l-6-6z'/%3E%3C/svg%3E" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Tritan - AI-Native Workflow Engine" />
   <title>Tritan - AI Workflow Engine</title>
 
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    *,
-    *::before,
-    *::after {
+    * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     :root {
-      --bg-0: #0c0c0e;
-      --bg-1: #141416;
-      --bg-2: #1c1c1f;
-      --bg-3: #28282c;
-      --bg-hover: #2f2f34;
-
+      --bg-0: #09090b;
+      --bg-1: #18181b;
+      --bg-2: #27272a;
+      --bg-3: #3f3f46;
       --accent: #7c3aed;
       --accent-light: #a78bfa;
-      --accent-bg: rgba(124, 58, 237, 0.12);
-
       --green: #22c55e;
       --yellow: #eab308;
       --red: #ef4444;
@@ -46,17 +35,10 @@
       --orange: #f97316;
       --teal: #14b8a6;
       --purple: #8b5cf6;
-
-      --text-0: #ffffff;
-      --text-1: #e4e4e7;
+      --text: #fafafa;
       --text-2: #a1a1aa;
       --text-3: #71717a;
-
       --border: #27272a;
-      --border-light: #3f3f46;
-
-      --radius: 8px;
-      --radius-lg: 12px;
     }
 
     html,
@@ -66,11 +48,10 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg-0);
-      color: var(--text-1);
+      color: var(--text);
       font-size: 13px;
-      -webkit-font-smoothing: antialiased;
     }
 
     .app {
@@ -79,13 +60,12 @@
       height: 100vh;
     }
 
-    /* ===== HEADER ===== */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 48px;
-      padding: 0 12px;
+      padding: 0 16px;
       background: var(--bg-1);
       border-bottom: 1px solid var(--border);
     }
@@ -101,44 +81,35 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 0 8px;
       font-weight: 600;
-      font-size: 14px;
-      color: var(--text-0);
+      font-size: 15px;
     }
 
-    .logo-mark {
+    .logo-box {
       width: 24px;
       height: 24px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      background: var(--accent);
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .logo-mark svg {
+    .logo-box svg {
       width: 14px;
       height: 14px;
       fill: white;
-    }
-
-    .sep {
-      width: 1px;
-      height: 20px;
-      background: var(--border);
-      margin: 0 4px;
     }
 
     .input {
       background: var(--bg-2);
       border: 1px solid var(--border);
       padding: 6px 10px;
-      font-size: 13px;
-      color: var(--text-1);
+      color: var(--text);
       border-radius: 6px;
       width: 160px;
       font-family: inherit;
+      font-size: 13px;
     }
 
     .input:focus {
@@ -147,71 +118,67 @@
     }
 
     .btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 5px;
       height: 30px;
-      padding: 0 10px;
+      padding: 0 12px;
       font-size: 12px;
       font-weight: 500;
-      font-family: inherit;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--bg-2);
-      color: var(--text-1);
+      color: var(--text);
       cursor: pointer;
-      transition: background 0.1s, border-color 0.1s;
+      font-family: inherit;
     }
 
     .btn:hover {
       background: var(--bg-3);
-      border-color: var(--border-light);
     }
 
     .btn-icon {
-      padding: 0;
       width: 30px;
+      padding: 0;
       justify-content: center;
     }
 
     .btn-primary {
       background: var(--accent);
       border-color: var(--accent);
-      color: white;
     }
 
     .btn-primary:hover {
       background: var(--accent-light);
-      border-color: var(--accent-light);
     }
 
-    /* ===== LAYOUT ===== */
+    .sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
     .layout {
       display: flex;
       flex: 1;
       overflow: hidden;
     }
 
-    /* ===== SIDEBAR ===== */
     .sidebar {
-      width: 200px;
+      width: 180px;
       background: var(--bg-1);
       border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sidebar-section {
       padding: 12px;
+      overflow-y: auto;
     }
 
     .sidebar-title {
       font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       color: var(--text-3);
-      margin-bottom: 8px;
+      margin: 8px 0;
+      letter-spacing: 0.5px;
     }
 
     .node-item {
@@ -222,31 +189,22 @@
       border-radius: 6px;
       cursor: grab;
       margin-bottom: 2px;
-      transition: background 0.1s;
     }
 
     .node-item:hover {
       background: var(--bg-2);
     }
 
-    .node-item:active {
-      cursor: grabbing;
-    }
-
     .node-dot {
       width: 8px;
       height: 8px;
       border-radius: 2px;
-      flex-shrink: 0;
     }
 
     .node-text {
       font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
     }
 
-    /* ===== CANVAS ===== */
     .canvas {
       flex: 1;
       position: relative;
@@ -265,36 +223,12 @@
 
     .grid {
       position: absolute;
-      width: 8000px;
-      height: 8000px;
-      left: -4000px;
-      top: -4000px;
+      width: 6000px;
+      height: 6000px;
+      left: -3000px;
+      top: -3000px;
       background-size: 20px 20px;
-      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
-      opacity: 0.5;
-    }
-
-    .connections {
-      position: absolute;
-      pointer-events: none;
-      overflow: visible;
-    }
-
-    .edge {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 2;
-      opacity: 0.5;
-    }
-
-    .edge:hover {
-      opacity: 1;
-    }
-
-    .edge-temp {
-      stroke: var(--accent-light);
-      stroke-dasharray: 4;
-      opacity: 0.6;
+      background-image: radial-gradient(circle, #333 1px, transparent 1px);
     }
 
     .nodes {
@@ -306,30 +240,28 @@
       min-width: 180px;
       background: var(--bg-1);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: 10px;
       cursor: grab;
-      user-select: none;
     }
 
     .node:hover {
-      border-color: var(--border-light);
+      border-color: var(--bg-3);
     }
 
     .node.selected {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-bg);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
     }
 
     .node.dragging {
       opacity: 0.8;
       z-index: 100;
-      cursor: grabbing;
     }
 
     .node-bar {
       height: 3px;
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
       background: var(--node-color);
+      border-radius: 10px 10px 0 0;
     }
 
     .node-head {
@@ -341,10 +273,10 @@
     }
 
     .node-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
+      width: 22px;
+      height: 22px;
       background: var(--node-color);
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -354,12 +286,13 @@
       width: 12px;
       height: 12px;
       fill: white;
+      stroke: white;
+      stroke-width: 2;
     }
 
     .node-title {
       font-size: 13px;
       font-weight: 600;
-      color: var(--text-0);
     }
 
     .node-body {
@@ -380,7 +313,6 @@
       font-weight: 500;
       color: var(--text-3);
       text-transform: uppercase;
-      letter-spacing: 0.3px;
       margin-bottom: 4px;
     }
 
@@ -390,11 +322,11 @@
       width: 100%;
       padding: 6px 8px;
       font-size: 12px;
-      font-family: inherit;
-      color: var(--text-1);
+      color: var(--text);
       background: var(--bg-2);
       border: 1px solid var(--border);
       border-radius: 4px;
+      font-family: inherit;
     }
 
     .field-input:focus,
@@ -409,21 +341,16 @@
       min-height: 50px;
     }
 
-    .field-code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-    }
-
     .handle {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--bg-3);
+      width: 12px;
+      height: 12px;
+      background: var(--bg-2);
       border: 2px solid var(--text-3);
       border-radius: 50%;
       cursor: crosshair;
-      transition: transform 0.1s, background 0.1s;
-      z-index: 5;
+      z-index: 10;
+      transition: transform 0.1s;
     }
 
     .handle:hover {
@@ -433,32 +360,64 @@
     }
 
     .handle-in {
-      left: -5px;
+      left: -6px;
       top: 50%;
-      transform: translateY(-50%);
+      margin-top: -6px;
+      border-color: var(--teal);
     }
 
     .handle-in:hover {
-      transform: translateY(-50%) scale(1.3);
+      background: var(--teal);
+      border-color: var(--teal);
     }
 
     .handle-out {
-      right: -5px;
+      right: -6px;
       top: 50%;
-      transform: translateY(-50%);
+      margin-top: -6px;
+      border-color: var(--accent);
     }
 
     .handle-out:hover {
-      transform: translateY(-50%) scale(1.3);
+      background: var(--accent);
+      border-color: var(--accent);
     }
 
-    /* Canvas Controls */
+    .edges {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .edge {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      opacity: 0.6;
+      pointer-events: stroke;
+      cursor: pointer;
+    }
+
+    .edge:hover {
+      opacity: 1;
+      stroke-width: 3;
+    }
+
+    .edge-temp {
+      stroke: var(--teal);
+      stroke-dasharray: 5;
+      opacity: 0.7;
+    }
+
     .controls {
       position: absolute;
       bottom: 12px;
       left: 12px;
       display: flex;
-      gap: 1px;
       background: var(--bg-1);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -471,19 +430,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: transparent;
+      background: none;
       border: none;
       color: var(--text-2);
-      font-size: 14px;
       cursor: pointer;
+      font-size: 14px;
     }
 
     .ctrl-btn:hover {
       background: var(--bg-2);
-      color: var(--text-0);
+      color: var(--text);
     }
 
-    .ctrl-label {
+    .ctrl-lbl {
       padding: 0 8px;
       font-size: 11px;
       color: var(--text-3);
@@ -504,17 +463,16 @@
       font-size: 16px;
       font-weight: 600;
       color: var(--text-2);
-      margin-bottom: 4px;
     }
 
     .empty-desc {
       font-size: 13px;
       color: var(--text-3);
+      margin-top: 4px;
     }
 
-    /* ===== PANEL ===== */
     .panel {
-      width: 260px;
+      width: 240px;
       background: var(--bg-1);
       border-left: 1px solid var(--border);
       display: flex;
@@ -542,16 +500,12 @@
       align-items: center;
       gap: 4px;
       font-size: 11px;
-      font-weight: 500;
     }
 
     .status-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-    }
-
-    .status-dot.ok {
       background: var(--green);
     }
 
@@ -565,19 +519,10 @@
       padding: 12px;
     }
 
-    .panel-section {
-      margin-bottom: 16px;
-    }
-
-    .panel-section:last-child {
-      margin-bottom: 0;
-    }
-
     .panel-label {
       font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       color: var(--text-3);
       margin-bottom: 8px;
     }
@@ -585,11 +530,13 @@
     .msg {
       display: flex;
       gap: 8px;
-      padding: 8px 10px;
+      padding: 8px;
       background: var(--bg-2);
       border-radius: 6px;
       margin-bottom: 6px;
       border-left: 2px solid var(--yellow);
+      font-size: 12px;
+      color: var(--text-2);
     }
 
     .msg.err {
@@ -600,19 +547,11 @@
       border-color: var(--green);
     }
 
-    .msg-icon {
-      font-size: 11px;
-    }
-
-    .msg-text {
-      font-size: 12px;
-      color: var(--text-2);
-    }
-
     .stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+      margin-top: 12px;
     }
 
     .stat {
@@ -623,7 +562,7 @@
     }
 
     .stat-num {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 600;
       color: var(--accent);
     }
@@ -632,114 +571,115 @@
       font-size: 10px;
       color: var(--text-3);
       text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .panel-empty {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-3);
-      font-size: 12px;
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--bg-3);
-      border-radius: 3px;
     }
   </style>
 </head>
 
 <body>
   <div id="root"></div>
-
   <script type="text/babel">
-    const { useState, useRef, useCallback, useEffect } = React;
-
-    // SVG Icons as components
-    const Icons = {
-      play: <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>,
-      zap: <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>,
-      git: <svg viewBox="0 0 24 24"><path d="M6 3v12m0 6v-6m6-12v6m0 12V15m6-12v18M6 9h12M6 15h6" /></svg>,
-      loop: <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4m14 4v2a4 4 0 0 1-4 4H3" /></svg>,
-      cpu: <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h6m-6 0v6M15 3h4a2 2 0 0 1 2 2v4m-6-6v6m6 0V5m0 4h-6m6 6v4a2 2 0 0 1-2 2h-4m6-6h-6m0 6v-6m-6 6H5a2 2 0 0 1-2-2v-4m6 6v-6m-6 0v4m0-4h6" /></svg>,
-      globe: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
-      code: <svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" /></svg>,
-      shuffle: <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" /></svg>,
-      shield: <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
-      folder: <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>,
-      download: <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>,
-      trash: <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>,
-    };
+    const { useState, useRef, useEffect, useLayoutEffect } = React;
 
     const NODES = {
-      trigger: { label: 'Trigger', color: 'var(--green)', icon: Icons.zap, cat: 'flow' },
-      action: { label: 'Action', color: 'var(--blue)', icon: Icons.play, cat: 'flow' },
-      condition: { label: 'Condition', color: 'var(--yellow)', icon: Icons.git, cat: 'flow' },
-      loop: { label: 'Loop', color: 'var(--purple)', icon: Icons.loop, cat: 'flow' },
-      llm: { label: 'LLM', color: 'var(--pink)', icon: Icons.cpu, cat: 'ai' },
-      http: { label: 'HTTP', color: 'var(--blue)', icon: Icons.globe, cat: 'data' },
-      code: { label: 'Code', color: 'var(--teal)', icon: Icons.code, cat: 'data' },
-      transform: { label: 'Transform', color: 'var(--orange)', icon: Icons.shuffle, cat: 'data' },
+      trigger: { label: 'Trigger', color: 'var(--green)', cat: 'flow' },
+      action: { label: 'Action', color: 'var(--blue)', cat: 'flow' },
+      condition: { label: 'Condition', color: 'var(--yellow)', cat: 'flow' },
+      loop: { label: 'Loop', color: 'var(--purple)', cat: 'flow' },
+      llm: { label: 'LLM', color: 'var(--pink)', cat: 'ai' },
+      http: { label: 'HTTP', color: 'var(--blue)', cat: 'data' },
+      code: { label: 'Code', color: 'var(--teal)', cat: 'data' },
+      transform: { label: 'Transform', color: 'var(--orange)', cat: 'data' },
     };
 
-    const LLM_MODELS = {
-      groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768'],
+    const MODELS = {
+      groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant'],
       openrouter: ['anthropic/claude-3.5-sonnet', 'openai/gpt-4o'],
-      cerebras: ['llama3.1-8b', 'llama3.1-70b'],
       gemini: ['gemini-2.0-flash-exp', 'gemini-1.5-pro']
     };
 
-    function Header({ name, setName, onClear, onRun, onExport, onImport }) {
+    function App() {
+      const [name, setName] = useState('Untitled');
+      const [nodes, setNodes] = useState([]);
+      const [edges, setEdges] = useState([]);
+      const [selected, setSelected] = useState(null);
+
+      const onDrag = (e, type) => { e.dataTransfer.setData('nodeType', type); };
+
       return (
-        <header className="header">
-          <div className="header-left">
-            <div className="logo">
-              <div className="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2L4 10l2 2 6-6 6 6 2-2-8-8zm0 8l-4 4v8h3v-6h2v6h3v-8l-4-4z" /></svg></div>
-              <span>Tritan</span>
+        <div className="app">
+          <header className="header">
+            <div className="header-left">
+              <div className="logo">
+                <div className="logo-box"><svg viewBox="0 0 24 24"><path d="M12 2L4 10l2 2 6-6 6 6 2-2-8-8z" /></svg></div>
+                <span>Tritan</span>
+              </div>
+              <div className="sep" />
+              <input className="input" value={name} onChange={e => setName(e.target.value)} />
             </div>
-            <div className="sep" />
-            <input className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Untitled" />
-          </div>
-          <div className="header-right">
-            <button className="btn btn-icon" onClick={onImport} title="Import"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg></button>
-            <button className="btn btn-icon" onClick={onExport} title="Export"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg></button>
-            <button className="btn btn-icon" onClick={onClear} title="Clear"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></button>
-            <div className="sep" />
-            <button className="btn btn-primary" onClick={onRun}>
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-              Run
-            </button>
-          </div>
-        </header>
-      );
-    }
+            <div className="header-right">
+              <button className="btn btn-icon" onClick={() => { setNodes([]); setEdges([]); }} title="Clear">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+              </button>
+              <div className="sep" />
+              <button className="btn btn-primary" onClick={() => alert(nodes.length ? 'Workflow ready!' : 'Add nodes first')}>
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                Run
+              </button>
+            </div>
+          </header>
 
-    function Sidebar({ onDrag }) {
-      const cats = { flow: 'Control', ai: 'AI', data: 'Data' };
-      const grouped = Object.entries(NODES).reduce((a, [k, v]) => ((a[v.cat] = a[v.cat] || []).push({ id: k, ...v }), a), {});
-
-      return (
-        <aside className="sidebar">
-          {Object.entries(grouped).map(([cat, items]) => (
-            <div key={cat} className="sidebar-section">
-              <div className="sidebar-title">{cats[cat]}</div>
-              {items.map(n => (
-                <div key={n.id} className="node-item" draggable onDragStart={e => onDrag(e, n.id)}>
-                  <div className="node-dot" style={{ background: n.color }} />
-                  <span className="node-text">{n.label}</span>
+          <div className="layout">
+            <aside className="sidebar">
+              <div className="sidebar-title">Control</div>
+              {['trigger', 'action', 'condition', 'loop'].map(t => (
+                <div key={t} className="node-item" draggable onDragStart={e => onDrag(e, t)}>
+                  <div className="node-dot" style={{ background: NODES[t].color }} />
+                  <span className="node-text">{NODES[t].label}</span>
                 </div>
               ))}
-            </div>
-          ))}
-        </aside>
+              <div className="sidebar-title">AI</div>
+              {['llm'].map(t => (
+                <div key={t} className="node-item" draggable onDragStart={e => onDrag(e, t)}>
+                  <div className="node-dot" style={{ background: NODES[t].color }} />
+                  <span className="node-text">{NODES[t].label}</span>
+                </div>
+              ))}
+              <div className="sidebar-title">Data</div>
+              {['http', 'code', 'transform'].map(t => (
+                <div key={t} className="node-item" draggable onDragStart={e => onDrag(e, t)}>
+                  <div className="node-dot" style={{ background: NODES[t].color }} />
+                  <span className="node-text">{NODES[t].label}</span>
+                </div>
+              ))}
+            </aside>
+
+            <Canvas nodes={nodes} setNodes={setNodes} edges={edges} setEdges={setEdges} selected={selected} setSelected={setSelected} />
+
+            <aside className="panel">
+              <div className="panel-head">
+                <div className="panel-title">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                  Guardian
+                </div>
+                <div className="status">
+                  <div className={`status-dot ${nodes.some(n => n.type === 'trigger') ? '' : 'err'}`} />
+                  <span>{nodes.some(n => n.type === 'trigger') ? 'Valid' : 'Issues'}</span>
+                </div>
+              </div>
+              <div className="panel-body">
+                <div className="panel-label">Validation</div>
+                {!nodes.length && <div className="msg">Add nodes to start</div>}
+                {nodes.length > 0 && !nodes.some(n => n.type === 'trigger') && <div className="msg err">Missing trigger node</div>}
+                {nodes.filter(n => n.type === 'llm' && !n.data.prompt).map(n => <div key={n.id} className="msg">{n.data.label} needs prompt</div>)}
+                {nodes.some(n => n.type === 'trigger') && <div className="msg ok">Ready to run</div>}
+                <div className="stats">
+                  <div className="stat"><div className="stat-num">{nodes.length}</div><div className="stat-lbl">Nodes</div></div>
+                  <div className="stat"><div className="stat-num">{edges.length}</div><div className="stat-lbl">Edges</div></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
       );
     }
 
@@ -748,21 +688,23 @@
       const nodeRefs = useRef({});
 
       const [zoom, setZoom] = useState(1);
-      const [pan, setPan] = useState({ x: 300, y: 200 });
+      const [pan, setPan] = useState({ x: 0, y: 0 });
       const [panning, setPanning] = useState(false);
       const [panStart, setPanStart] = useState({ x: 0, y: 0 });
-
       const [dragging, setDragging] = useState(null);
       const [dragOff, setDragOff] = useState({ x: 0, y: 0 });
-
       const [connecting, setConnecting] = useState(null);
       const [tempEdge, setTempEdge] = useState(null);
+      const [tick, setTick] = useState(0);
+
+      // Force re-render to update edge positions after nodes mount
+      useLayoutEffect(() => { setTick(t => t + 1); }, [nodes, edges]);
 
       useEffect(() => {
         const el = ref.current;
-        const wheel = e => { e.preventDefault(); setZoom(z => Math.max(0.25, Math.min(2, z + (e.deltaY > 0 ? -0.1 : 0.1)))); };
-        el?.addEventListener('wheel', wheel, { passive: false });
-        return () => el?.removeEventListener('wheel', wheel);
+        const onWheel = e => { e.preventDefault(); setZoom(z => Math.max(0.25, Math.min(2, z + (e.deltaY > 0 ? -0.1 : 0.1)))); };
+        el?.addEventListener('wheel', onWheel, { passive: false });
+        return () => el?.removeEventListener('wheel', onWheel);
       }, []);
 
       const toCanvas = (cx, cy) => {
@@ -770,20 +712,28 @@
         return { x: (cx - r.left - pan.x) / zoom, y: (cy - r.top - pan.y) / zoom };
       };
 
-      const nodePos = (id, side) => {
-        const n = nodes.find(x => x.id === id);
-        if (!n) return { x: 0, y: 0 };
-        const el = nodeRefs.current[id];
-        const w = el?.offsetWidth || 180, h = el?.offsetHeight || 60;
-        return { x: n.x + (side === 'out' ? w : 0), y: n.y + h / 2 };
+      const getHandlePos = (nodeId, side) => {
+        const node = nodes.find(n => n.id === nodeId);
+        if (!node) return null;
+        // Use fixed dimensions based on node type (more reliable than refs)
+        const hasBody = ['llm', 'http', 'code', 'condition'].includes(node.type);
+        const w = 180;
+        const h = hasBody ? 160 : 50; // LLM/HTTP/Code have body, others don't
+        return { x: node.x + (side === 'out' ? w : 0), y: node.y + h / 2 };
       };
 
       const onDrop = e => {
         e.preventDefault();
         const type = e.dataTransfer.getData('nodeType');
-        if (!type) return;
+        if (!type || !NODES[type]) return;
         const p = toCanvas(e.clientX, e.clientY);
-        setNodes(prev => [...prev, { id: `n${Date.now()}`, type, x: p.x - 90, y: p.y - 30, data: { label: NODES[type].label, provider: type === 'llm' ? 'groq' : null, model: type === 'llm' ? 'llama-3.3-70b-versatile' : null, prompt: '', config: {} } }]);
+        setNodes(prev => [...prev, {
+          id: `n${Date.now()}`,
+          type,
+          x: p.x - 90,
+          y: p.y - 30,
+          data: { label: NODES[type].label, provider: 'groq', model: 'llama-3.3-70b-versatile', prompt: '', config: {} }
+        }]);
       };
 
       const onCanvasDown = e => {
@@ -803,129 +753,123 @@
         setDragOff({ x: p.x - node.x, y: p.y - node.y });
       };
 
-      const onMove = e => {
-        if (panning) return setPan({ x: e.clientX - panStart.x, y: e.clientY - panStart.y });
+      const onMouseMove = e => {
+        if (panning) { setPan({ x: e.clientX - panStart.x, y: e.clientY - panStart.y }); return; }
         if (dragging) {
           const p = toCanvas(e.clientX, e.clientY);
           setNodes(prev => prev.map(n => n.id === dragging ? { ...n, x: p.x - dragOff.x, y: p.y - dragOff.y } : n));
         }
         if (connecting) {
-          const s = nodePos(connecting, 'out');
-          const m = toCanvas(e.clientX, e.clientY);
-          setTempEdge({ x1: s.x, y1: s.y, x2: m.x, y2: m.y });
+          const start = getHandlePos(connecting, 'out');
+          const mouse = toCanvas(e.clientX, e.clientY);
+          if (start) setTempEdge({ x1: start.x, y1: start.y, x2: mouse.x, y2: mouse.y });
         }
       };
 
-      const onUp = () => { setPanning(false); setDragging(null); setConnecting(null); setTempEdge(null); };
+      const onMouseUp = () => { setPanning(false); setDragging(null); setConnecting(null); setTempEdge(null); };
 
       const outDown = (e, id) => { e.stopPropagation(); setConnecting(id); };
+
       const inUp = (e, id) => {
         e.stopPropagation();
         if (connecting && connecting !== id && !edges.some(c => c.from === connecting && c.to === id)) {
           setEdges(prev => [...prev, { id: `e${Date.now()}`, from: connecting, to: id }]);
         }
-        setConnecting(null); setTempEdge(null);
+        setConnecting(null);
+        setTempEdge(null);
       };
-
-      const delEdge = id => setEdges(prev => prev.filter(c => c.id !== id));
 
       const upd = (id, k, v) => setNodes(prev => prev.map(n => n.id === id ? { ...n, data: { ...n.data, [k]: v } } : n));
 
       return (
         <div className={`canvas ${panning ? 'panning' : ''}`} ref={ref}
           onDrop={onDrop} onDragOver={e => e.preventDefault()}
-          onMouseDown={onCanvasDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
+          onMouseDown={onCanvasDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp} onMouseLeave={onMouseUp}
           onContextMenu={e => e.preventDefault()} onClick={() => setSelected(null)}>
 
           <div className="viewport" style={{ transform: `translate(${pan.x}px,${pan.y}px) scale(${zoom})` }}>
             <div className="grid" />
 
-            <svg className="connections" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-              {edges.map(c => {
-                const s = nodePos(c.from, 'out'), t = nodePos(c.to, 'in');
-                const mx = (s.x + t.x) / 2;
-                return <path key={c.id} className="edge" style={{ pointerEvents: 'stroke', cursor: 'pointer' }} d={`M${s.x},${s.y}C${mx},${s.y} ${mx},${t.y} ${t.x},${t.y}`} onClick={() => delEdge(c.id)} />;
-              })}
-              {tempEdge && <path className="edge edge-temp" d={`M${tempEdge.x1},${tempEdge.y1}L${tempEdge.x2},${tempEdge.y2}`} />}
-            </svg>
-
             <div className="nodes">
-              {nodes.map(n => {
-                const cfg = NODES[n.type];
-                return (
-                  <div key={n.id} ref={el => nodeRefs.current[n.id] = el}
-                    className={`node ${selected === n.id ? 'selected' : ''} ${dragging === n.id ? 'dragging' : ''}`}
-                    style={{ left: n.x, top: n.y, '--node-color': cfg.color }}
-                    onMouseDown={e => onNodeDown(e, n)}>
-                    <div className="node-bar" />
-                    {n.type !== 'trigger' && <div className="handle handle-in" onMouseUp={e => inUp(e, n.id)} />}
-                    <div className="handle handle-out" onMouseDown={e => outDown(e, n.id)} />
-
-                    <div className="node-head">
-                      <div className="node-icon">{cfg.icon}</div>
-                      <span className="node-title">{n.data.label}</span>
-                    </div>
-
-                    {n.type === 'llm' && (
-                      <div className="node-body">
-                        <div className="field">
-                          <label className="field-label">Provider</label>
-                          <select className="field-select" value={n.data.provider || 'groq'} onChange={e => upd(n.id, 'provider', e.target.value)}>
-                            {Object.keys(LLM_MODELS).map(p => <option key={p}>{p}</option>)}
-                          </select>
-                        </div>
-                        <div className="field">
-                          <label className="field-label">Model</label>
-                          <select className="field-select" value={n.data.model || ''} onChange={e => upd(n.id, 'model', e.target.value)}>
-                            {(LLM_MODELS[n.data.provider] || []).map(m => <option key={m}>{m}</option>)}
-                          </select>
-                        </div>
-                        <div className="field">
-                          <label className="field-label">Prompt</label>
-                          <textarea className="field-textarea" value={n.data.prompt || ''} onChange={e => upd(n.id, 'prompt', e.target.value)} placeholder="Enter prompt..." />
-                        </div>
-                      </div>
-                    )}
-
-                    {n.type === 'http' && (
-                      <div className="node-body">
-                        <div className="field">
-                          <label className="field-label">Method</label>
-                          <select className="field-select" value={n.data.config?.method || 'GET'} onChange={e => upd(n.id, 'config', { ...n.data.config, method: e.target.value })}>
-                            <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
-                          </select>
-                        </div>
-                        <div className="field">
-                          <label className="field-label">URL</label>
-                          <input className="field-input" value={n.data.config?.url || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, url: e.target.value })} placeholder="https://..." />
-                        </div>
-                      </div>
-                    )}
-
-                    {n.type === 'condition' && (
-                      <div className="node-body">
-                        <div className="field">
-                          <label className="field-label">Expression</label>
-                          <input className="field-input field-code" value={n.data.config?.condition || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, condition: e.target.value })} placeholder="value > 10" />
-                        </div>
-                      </div>
-                    )}
-
-                    {n.type === 'code' && (
-                      <div className="node-body">
-                        <div className="field">
-                          <label className="field-label">Script</label>
-                          <textarea className="field-textarea field-code" value={n.data.config?.code || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, code: e.target.value })} placeholder="return data" />
-                        </div>
-                      </div>
-                    )}
+              {nodes.map(n => (
+                <div key={n.id} ref={el => { if (el) nodeRefs.current[n.id] = el; }}
+                  className={`node ${selected === n.id ? 'selected' : ''} ${dragging === n.id ? 'dragging' : ''}`}
+                  style={{ left: n.x, top: n.y, '--node-color': NODES[n.type].color }}
+                  onMouseDown={e => onNodeDown(e, n)}>
+                  <div className="node-bar" />
+                  {n.type !== 'trigger' && <div className="handle handle-in" onMouseUp={e => inUp(e, n.id)} />}
+                  <div className="handle handle-out" onMouseDown={e => outDown(e, n.id)} />
+                  <div className="node-head">
+                    <div className="node-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" /></svg></div>
+                    <span className="node-title">{n.data.label}</span>
                   </div>
-                );
-              })}
+                  {n.type === 'llm' && (
+                    <div className="node-body">
+                      <div className="field">
+                        <label className="field-label">Provider</label>
+                        <select className="field-select" value={n.data.provider} onChange={e => upd(n.id, 'provider', e.target.value)}>
+                          {Object.keys(MODELS).map(p => <option key={p}>{p}</option>)}
+                        </select>
+                      </div>
+                      <div className="field">
+                        <label className="field-label">Model</label>
+                        <select className="field-select" value={n.data.model} onChange={e => upd(n.id, 'model', e.target.value)}>
+                          {(MODELS[n.data.provider] || []).map(m => <option key={m}>{m}</option>)}
+                        </select>
+                      </div>
+                      <div className="field">
+                        <label className="field-label">Prompt</label>
+                        <textarea className="field-textarea" value={n.data.prompt} onChange={e => upd(n.id, 'prompt', e.target.value)} placeholder="Enter prompt..." />
+                      </div>
+                    </div>
+                  )}
+                  {n.type === 'http' && (
+                    <div className="node-body">
+                      <div className="field">
+                        <label className="field-label">Method</label>
+                        <select className="field-select" value={n.data.config.method || 'GET'} onChange={e => upd(n.id, 'config', { ...n.data.config, method: e.target.value })}>
+                          <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+                        </select>
+                      </div>
+                      <div className="field">
+                        <label className="field-label">URL</label>
+                        <input className="field-input" value={n.data.config.url || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, url: e.target.value })} placeholder="https://..." />
+                      </div>
+                    </div>
+                  )}
+                  {n.type === 'code' && (
+                    <div className="node-body">
+                      <div className="field">
+                        <label className="field-label">Script</label>
+                        <textarea className="field-textarea" value={n.data.config.code || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, code: e.target.value })} placeholder="return data" />
+                      </div>
+                    </div>
+                  )}
+                  {n.type === 'condition' && (
+                    <div className="node-body">
+                      <div className="field">
+                        <label className="field-label">Condition</label>
+                        <input className="field-input" value={n.data.config.condition || ''} onChange={e => upd(n.id, 'config', { ...n.data.config, condition: e.target.value })} placeholder="value > 10" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
+
+            <svg className="edges" key={tick} style={{ position: 'absolute', top: 0, left: 0, width: 5000, height: 5000, pointerEvents: 'none', overflow: 'visible' }}>
+              {edges.map(edge => {
+                const s = getHandlePos(edge.from, 'out');
+                const t = getHandlePos(edge.to, 'in');
+                if (!s || !t) return null;
+                const mx = (s.x + t.x) / 2;
+                return <path key={edge.id} className="edge" stroke="#7c3aed" strokeWidth="2" fill="none" d={`M${s.x},${s.y} C${mx},${s.y} ${mx},${t.y} ${t.x},${t.y}`} onClick={() => setEdges(prev => prev.filter(e => e.id !== edge.id))} />;
+              })}
+              {tempEdge && <path className="edge edge-temp" stroke="#14b8a6" strokeWidth="2" strokeDasharray="5" fill="none" d={`M${tempEdge.x1},${tempEdge.y1} L${tempEdge.x2},${tempEdge.y2}`} />}
+            </svg>
           </div>
 
-          {nodes.length === 0 && (
+          {!nodes.length && (
             <div className="empty">
               <div className="empty-title">Start building</div>
               <div className="empty-desc">Drag nodes from the sidebar</div>
@@ -934,81 +878,9 @@
 
           <div className="controls">
             <button className="ctrl-btn" onClick={() => setZoom(z => Math.min(2, z + 0.25))}>+</button>
-            <span className="ctrl-label">{Math.round(zoom * 100)}%</span>
-            <button className="ctrl-btn" onClick={() => setZoom(z => Math.max(0.25, z - 0.25))}>−</button>
-            <button className="ctrl-btn" onClick={() => { setZoom(1); setPan({ x: 300, y: 200 }); }}>○</button>
-          </div>
-        </div>
-      );
-    }
-
-    function Panel({ nodes, edges }) {
-      const errs = [], warns = [];
-
-      if (!nodes.length) errs.push('No nodes');
-      else {
-        if (!nodes.some(n => n.type === 'trigger')) errs.push('Missing trigger node');
-        nodes.forEach(n => {
-          if (n.type === 'llm' && !n.data.prompt) warns.push(`${n.data.label} needs prompt`);
-          if (n.type === 'http' && !n.data.config?.url) warns.push(`${n.data.label} needs URL`);
-          if (n.type !== 'trigger' && !edges.some(e => e.to === n.id)) warns.push(`${n.data.label} disconnected`);
-        });
-      }
-
-      const ok = !errs.length;
-
-      return (
-        <aside className="panel">
-          <div className="panel-head">
-            <div className="panel-title">
-              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              Guardian
-            </div>
-            <div className="status">
-              <div className={`status-dot ${ok ? 'ok' : 'err'}`} />
-              <span>{ok ? 'Valid' : 'Issues'}</span>
-            </div>
-          </div>
-          <div className="panel-body">
-            <div className="panel-section">
-              <div className="panel-label">Validation</div>
-              {errs.map((e, i) => <div key={i} className="msg err"><span className="msg-icon">×</span><span className="msg-text">{e}</span></div>)}
-              {warns.map((w, i) => <div key={i} className="msg"><span className="msg-icon">!</span><span className="msg-text">{w}</span></div>)}
-              {ok && !warns.length && nodes.length > 0 && <div className="msg ok"><span className="msg-icon">✓</span><span className="msg-text">Ready to run</span></div>}
-              {!nodes.length && <div className="panel-empty">Add nodes to validate</div>}
-            </div>
-            <div className="panel-section">
-              <div className="panel-label">Stats</div>
-              <div className="stats">
-                <div className="stat"><div className="stat-num">{nodes.length}</div><div className="stat-lbl">Nodes</div></div>
-                <div className="stat"><div className="stat-num">{edges.length}</div><div className="stat-lbl">Edges</div></div>
-              </div>
-            </div>
-          </div>
-        </aside>
-      );
-    }
-
-    function App() {
-      const [name, setName] = useState('Untitled');
-      const [nodes, setNodes] = useState([]);
-      const [edges, setEdges] = useState([]);
-      const [selected, setSelected] = useState(null);
-
-      const onDrag = (e, type) => { e.dataTransfer.setData('nodeType', type); e.dataTransfer.effectAllowed = 'move'; };
-
-      return (
-        <div className="app">
-          <Header name={name} setName={setName}
-            onClear={() => { setNodes([]); setEdges([]); }}
-            onRun={() => alert(nodes.length ? 'Workflow ready! Connect backend to execute.' : 'Add nodes first')}
-            onExport={() => { const b = new Blob([JSON.stringify({ name, nodes, edges }, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${name}.json`; a.click(); }}
-            onImport={() => { const i = document.createElement('input'); i.type = 'file'; i.accept = '.json'; i.onchange = e => { const r = new FileReader(); r.onload = ev => { try { const d = JSON.parse(ev.target.result); setName(d.name); setNodes(d.nodes || []); setEdges(d.edges || d.connections || []); } catch { } }; r.readAsText(e.target.files[0]); }; i.click(); }}
-          />
-          <div className="layout">
-            <Sidebar onDrag={onDrag} />
-            <Canvas nodes={nodes} setNodes={setNodes} edges={edges} setEdges={setEdges} selected={selected} setSelected={setSelected} />
-            <Panel nodes={nodes} edges={edges} />
+            <span className="ctrl-lbl">{Math.round(zoom * 100)}%</span>
+            <button className="ctrl-btn" onClick={() => setZoom(z => Math.max(0.25, z - 0.25))}>-</button>
+            <button className="ctrl-btn" onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>o</button>
           </div>
         </div>
       );
